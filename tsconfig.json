@@ -1,0 +1,30 @@
+{
+	"compileOnSave": true,
+	"compilerOptions": {
+		"target": "es5",
+		"module": "system",
+		"moduleResolution": "node",
+		"sourceMap": true,
+		"declaration": false,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"removeComments": false,
+		"noImplicitAny": true,
+		"strict": true,
+		"noImplicitThis": true,
+		"noImplicitReturns": true,
+		"typeRoots": [
+			"node_modules/@types"
+		],
+		"lib": [
+			"es2017",
+			"dom"
+		],
+		"outDir": "scripts"
+		/*"outFile": "scripts/script.js"*/
+	},
+	"exclude": [
+		"node_modules",
+		"jspm_packages"
+	]
+}

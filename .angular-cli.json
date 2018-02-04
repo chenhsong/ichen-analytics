@@ -1,0 +1,32 @@
+{
+	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+	"project": {
+		"name": "ichen-terminal"
+	},
+	"apps": [{
+		"root": "src",
+		"outDir": "dist",
+		"assets": [
+			"images",
+			"lib",
+			"stylesheets/main.min.css",
+			"stylesheets/common",
+			"stylesheets/fonts"
+		],
+		"index": "index.html",
+		"main": "main.ts",
+		"polyfills": "polyfills.ts",
+		"tsconfig": "tsconfig.app.json",
+		"prefix": "app",
+		"scripts": [],
+		"environmentSource": "environments/environment.ts",
+		"environments": {
+			"dev": "environments/environment.ts",
+			"prod": "environments/environment.prod.ts"
+		}
+	}],
+	"defaults": {
+		"styleExt": "scss",
+		"component": {}
+	}
+}
