@@ -1,5 +1,4 @@
-﻿import { Component, Input, Output } from "@angular/core";
-import { Http } from "@angular/http";
+﻿import { Http } from "@angular/http";
 import { Config } from "../config";
 
 export abstract class ReportBaseComponent<T>

@@ -1,5 +1,5 @@
 ﻿import { Type } from "@angular/core";
-import { Route } from "@angular/router";
+import { Route, RouterModule } from "@angular/router";
 
 import { URL } from "./config";
 import { HomeComponent } from "./views/home.component";
@@ -31,7 +31,7 @@ export const AppRoutes: IRoute[] = [
 	{ path: "**", redirectTo: "/home", hidden: true }
 ];
 
-export const AppComponentsList = AppRoutes.filter(r => !!r.component).map(r => r.component as Type<any>);
-
 URL.loginRoute = (AppRoutes.find(r => r.component === LoginComponent) as IRoute).name as string;
 URL.homeRoute = (AppRoutes.find(r => r.component === HomeComponent) as IRoute).name as string;
+
+export const AppRouterModule = RouterModule.forRoot(AppRoutes);
