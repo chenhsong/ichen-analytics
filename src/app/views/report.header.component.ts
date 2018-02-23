@@ -30,7 +30,7 @@ import { IMyDrpOptions, IMyDayLabels, IMyMonthLabels } from "mydaterangepicker";
 				<div class="row">
 					<div class="form-group col-sm-8 col-md-5">
 						<div class="input-group">
-							<span class="input-group-addon">{{i18n.labelCategorize}}</span>
+							<span class="input-group-prepend input-group-text">{{i18n.labelCategorize}}</span>
 							<select class="form-control" [(ngModel)]="step" [disabled]="disabled" (change)="$event.target.value==byMachineStep ? selectedController='0' : null">
 								<option value="00:00:00">{{i18n.labelEntireRange}}</option>
 								<option *ngIf="controllersList.length > 1" value="{{byMachineStep}}">{{i18n.labelByMachine}}</option>
@@ -47,7 +47,7 @@ import { IMyDrpOptions, IMyDayLabels, IMyMonthLabels } from "mydaterangepicker";
 
 					<div class="form-group col-md-6">
 						<div class="input-group">
-							<span class="input-group-addon">{{i18n.labelMachine}}</span>
+							<span class="input-group-prepend input-group-text">{{i18n.labelMachine}}</span>
 							<select class="form-control" [(ngModel)]="selectedController" [disabled]="disabled" (change)="$event.target.value!='0' && step==byMachineStep ? step='00:00:00' : null">
 								<option *ngIf="controllersList.length > 1" value="0">{{i18n.labelSelectAll}}</option>
 								<option *ngFor="let controller of controllersList" value="{{controller.id}}">{{controller.name}} ({{controller.id}})</option>

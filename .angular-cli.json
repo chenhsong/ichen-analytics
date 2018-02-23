@@ -9,8 +9,8 @@
 		"assets": [
 			"images",
 			"lib",
+			{ "glob": "bootstrap.min.css", "input": "../node_modules/bootstrap/dist/css", "output": "stylesheets" },
 			"stylesheets/main.min.css",
-			"stylesheets/common",
 			"stylesheets/fonts"
 		],
 		"index": "index.html",

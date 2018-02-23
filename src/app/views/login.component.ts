@@ -13,7 +13,7 @@ import { Config, URL, reloadControllersList } from "../config";
 			<div class="card-body">
 				<div class="ichen-edit-id form-group" [class.has-danger]="!isValidUser">
 					<div class="input-group input-group-lg">
-						<span class="input-group-addon">{{i18n.labelUserName}}</span>
+						<span class="input-group-prepend input-group-text">{{i18n.labelUserName}}</span>
 						<input name="input-username" [ngModel]="user" type="text" class="form-control form-control-danger" placeholder="{{i18n.labelEnterUserName}}"
 							(input)="$event.target.value=user=$event.target.value.trim()"
 						 />
@@ -22,7 +22,7 @@ import { Config, URL, reloadControllersList } from "../config";
 
 				<div class="ichen-edit-id form-group" [class.has-danger]="!isValidPassword">
 					<div class="input-group input-group-lg">
-						<span class="input-group-addon">{{i18n.labelPassword}}</span>
+						<span class="input-group-prepend input-group-text">{{i18n.labelPassword}}</span>
 						<input name="input-password" [ngModel]="password" type="password" class="form-control form-control-danger" placeholder="{{i18n.labelEnterPassword}}"
 							(input)="$event.target.value=password=$event.target.value.trim()"
 						 />

@@ -22,7 +22,7 @@ import { IMyDrpOptions, IMyDayLabels, IMyMonthLabels } from "mydaterangepicker";
 				<div class="row">
 					<div class="form-group col-sm-8 col-md-5">
 						<div class="input-group">
-							<span class="input-group-addon">{{i18n.labelDownload}}</span>
+							<span class="input-group-prepend input-group-text">{{i18n.labelDownload}}</span>
 							<select class="form-control" [(ngModel)]="dataset" [disabled]="disabled">
 								<option value="">{{i18n.labelSelectDataSet}}</option>
 								<option *ngIf="currentUser && currentUser.roles.indexOf('Status') >= 0" value="events">{{i18n.labelStatus}}</option>
@@ -35,7 +35,7 @@ import { IMyDrpOptions, IMyDayLabels, IMyMonthLabels } from "mydaterangepicker";
 
 					<div class="form-group col-md-6">
 						<div class="input-group">
-							<span class="input-group-addon">{{i18n.labelMachine}}</span>
+							<span class="input-group-prepend input-group-text">{{i18n.labelMachine}}</span>
 							<select class="form-control" [(ngModel)]="selectedController" [disabled]="disabled">
 								<option value="">{{i18n.labelSelectMachine}}</option>
 								<option *ngFor="let controller of controllersList" value="{{controller.id}}">{{controller.name}} ({{controller.id}})</option>
@@ -47,7 +47,7 @@ import { IMyDrpOptions, IMyDayLabels, IMyMonthLabels } from "mydaterangepicker";
 				<div class="row">
 					<div class="form-group col-sm-6">
 						<div class="input-group">
-							<span class="input-group-addon">{{i18n.labelFormat}}</span>
+							<span class="input-group-prepend input-group-text">{{i18n.labelFormat}}</span>
 							<select class="form-control" [(ngModel)]="format" [disabled]="disabled">
 								<option value="xls">{{i18n.labelFormatXls}}</option>
 								<option value="xlsx">{{i18n.labelFormatXlsx}}</option>
