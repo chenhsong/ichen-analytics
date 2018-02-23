@@ -1,6 +1,4 @@
-﻿import { Config } from "./config";
-
-import * as i18nJson from "../lib/i18n.json";
+﻿import { Config, URL } from "./config";
 
 // Constants
 
@@ -16,12 +14,21 @@ if (localStorage) {
 
 // Utility functions
 
-const i18n: { [lang: string]: ITranslationDictionary; } = i18nJson as any;
+let i18n: ({ [lang: string]: ITranslationDictionary; } | null) = null;
 
 export function switchLanguage(lang: string)
 {
+	if (!i18n) {
+		// Dictionary not yet loaded
+		Config.lang = "NOTLOADED";
+		Config.i18n = {};
+		return;
+	}
+
+	// Default for unknown language
 	if (!(lang in i18n)) lang = defaultLang;
 
+	// Set new language
 	Config.lang = lang;
 	Config.i18n = i18n[lang];
 
@@ -31,4 +38,16 @@ export function switchLanguage(lang: string)
 	console.log(`Language switched to [${lang}]`);
 }
 
-switchLanguage(defaultLang);
+// Load dictionary
+
+(async function()
+{
+	const resp = await fetch(URL.i18n);
+	i18n = (await resp.json());
+	console.debug("Translation file loaded:", i18n);
+
+	switchLanguage(Config.lang);
+
+	// Manually trigger change detection since the fetch API works outside of Angular's zone
+	if (Config.appRef) Config.appRef.tick();
+})();

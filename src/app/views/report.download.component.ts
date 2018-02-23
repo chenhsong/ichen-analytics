@@ -76,10 +76,10 @@ import { IMyDrpOptions, IMyDayLabels, IMyMonthLabels } from "mydaterangepicker";
 })
 export class ReportDownloadComponent implements OnChanges
 {
-	@Input() public readonly i18n: Readonly<ITranslationDictionary>;
-	@Input() public currentUser: Readonly<ILoggedInUser>;
-	@Input() public controllersList: Readonly<IController>[];
-	@Input() public title: string;
+	@Input() public readonly i18n!: Readonly<ITranslationDictionary>;
+	@Input() public currentUser: Readonly<ILoggedInUser> | null = null;
+	@Input() public controllersList!: Readonly<IController>[];
+	@Input() public title: string | null = null;
 	@Input() public disabled = false;
 	@Output("run") public readonly runEvent = new EventEmitter<IRunReportParameters>();
 

@@ -31,6 +31,17 @@ export const AppRoutes: IRoute[] = [
 	{ path: "**", redirectTo: "/home", hidden: true }
 ];
 
+export const AppComponentsList = [
+	HomeComponent,
+	LoginComponent,
+	LogoutComponent,
+	JobModesReportComponent,
+	OpModesReportComponent,
+	OperatorsReportComponent,
+	JobCardsReportComponent,
+	MoldsReportComponent
+];
+
 URL.loginRoute = (AppRoutes.find(r => r.component === LoginComponent) as IRoute).name as string;
 URL.homeRoute = (AppRoutes.find(r => r.component === HomeComponent) as IRoute).name as string;
 

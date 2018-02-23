@@ -1,4 +1,4 @@
-﻿import { Component, Input, Output, enableProdMode, ModuleWithProviders } from "@angular/core";
+﻿import { Component, Input, Output, enableProdMode, ModuleWithProviders, ApplicationRef } from "@angular/core";
 import { Location } from "@angular/common";
 import { Router } from "@angular/router";
 import { Http } from "@angular/http";
@@ -14,8 +14,8 @@ enableProdMode();
 	template: `
 		<header>
 			<div class="container">
-				<a href="#"><img id="logo-ichen" src="/images/ichen_40_logo_small.png" /></a>
-				<a id="logo-ch" href="http://www.chenhsong.com"><img src="/images/header_logo_dark.png" /><img class="d-none d-sm-inline" src="/images/{{i18n.ch_logo}}.png" /></a>
+				<a href="#"><img id="logo-ichen" src="images/common/ichen_40_logo_small.png" /></a>
+				<a id="logo-ch" href="http://www.chenhsong.com"><img src="images/common/header_logo_dark.png" /><img class="d-none d-sm-inline" src="images/common/{{i18n.ch_logo}}.png" /></a>
 				<span class="d-none d-md-inline">{{i18n.app_title_full}}</span>
 				<span class="d-md-none">{{i18n.app_title_short}}</span>
 			</div>
@@ -23,9 +23,9 @@ enableProdMode();
 
 		<div class="container" style="margin-top:2px">
 			<div id="languages" class="float-right">
-				<a [class.active]="currentLang=='en'" (click)="switchLanguage('en')"><img src="/images/lang_en.png" /></a>
-				<a [class.active]="currentLang=='zh-tw'" (click)="switchLanguage('zh-tw')"><img src="/images/lang_zh-tw.png" /></a>
-				<a [class.active]="currentLang=='zh-cn'" (click)="switchLanguage('zh-cn')"><img src="/images/lang_zh-cn.png" /></a>
+				<a [class.active]="currentLang=='en'" (click)="switchLanguage('en')"><img src="images/common/lang_en.png" /></a>
+				<a [class.active]="currentLang=='zh-tw'" (click)="switchLanguage('zh-tw')"><img src="images/common/lang_zh-tw.png" /></a>
+				<a [class.active]="currentLang=='zh-cn'" (click)="switchLanguage('zh-cn')"><img src="images/common/lang_zh-cn.png" /></a>
 			</div>
 		</div>
 
@@ -64,9 +64,10 @@ export class AppComponent
 	public get currentLang() { return Config.lang; }
 	public readonly routes = AppRoutes.filter(r => !r.hidden);
 
-	constructor(private location: Location, private router: Router, private http: Http)
+	constructor(private location: Location, private router: Router, private http: Http, private app: ApplicationRef)
 	{
 		Config.jumpToPage = this.jumpToPage.bind(this);
+		Config.appRef = app;
 
 		this.loadAsync();
 	}

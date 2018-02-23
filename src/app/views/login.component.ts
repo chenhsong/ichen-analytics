@@ -42,8 +42,8 @@ import { Config, URL, reloadControllersList } from "../config";
 })
 export class LoginComponent
 {
-	public user: string;
-	public password: string;
+	public user: string | null = null;
+	public password: string | null = null;
 	public isBusy = false;
 	public isError = false;
 

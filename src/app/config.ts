@@ -1,4 +1,5 @@
-﻿import { Http } from "@angular/http";
+﻿import { ApplicationRef } from "@angular/core";
+import { Http } from "@angular/http";
 import { Observable } from "rxjs/Rx";
 
 // Constants
@@ -11,6 +12,8 @@ const shiftStep = "08:00:00";		// 8-hour shifts
 const timeZone = -(new Date()).getTimezoneOffset();
 
 export const URL = {
+	i18n: "lib/i18n.json",
+
 	loginRoute: "routeLogin",
 	homeRoute: "routeHome",
 	login: `${urlRoot}/login`,
@@ -43,6 +46,7 @@ const currentUser = null as ILoggedInUser | null;
 const Cfg = {
 	lang: "",
 	urlRoot,
+	appRef: null,
 	get iFrame() { return document.getElementById(iframeId) as HTMLIFrameElement; },
 	jumpToPage,
 	currentUser,
@@ -82,6 +86,7 @@ export async function reloadControllersList(http: Http)
 export const Config = Cfg as {
 	lang: string;
 	readonly urlRoot: string;
+	appRef: ApplicationRef | null;
 	iFrame: HTMLIFrameElement | null;
 	jumpToPage: (page?: string) => void;
 	currentUser: Readonly<ILoggedInUser> | null;

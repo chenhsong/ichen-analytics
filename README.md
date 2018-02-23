@@ -1,6 +1,6 @@
-# iChen&reg; System 4.1 Analytics UI
+# iChen&reg; System 4.1.1 Analytics UI
 
-Language: TypeScript 2.6 or above  
+Language: TypeScript 2.7 or above  
 Framework: Angular 5.2 or above
 
 This is a web application that provides analytical support for stored historical

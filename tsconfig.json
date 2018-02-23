@@ -21,7 +21,6 @@
 			"dom"
 		],
 		"outDir": "scripts"
-		/*"outFile": "scripts/script.js"*/
 	},
 	"exclude": [
 		"node_modules",
