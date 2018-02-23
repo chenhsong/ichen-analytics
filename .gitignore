@@ -2,6 +2,6 @@
 node_modules
 dist
 release
-src/stylesheets
+src/stylesheets/*.css
 
 *.bat
