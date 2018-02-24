@@ -1,10 +1,9 @@
 ﻿import { ApplicationRef } from "@angular/core";
 import { Http } from "@angular/http";
-import { Observable } from "rxjs/Rx";
+import "rxjs/add/operator/map";
 
 // Constants
 
-const dummy = new Observable<number>();
 const iframeId = "downloadIFrame";
 const urlRoot = (window as any).ServiceUrl || "";
 const chartCanvasId = "chartCanvas";
