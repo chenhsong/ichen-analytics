@@ -29,7 +29,7 @@ export function DrawPieChart(
 		if (!data.data.hasOwnProperty(label)) continue;
 
 		const value = data.data[label];
-		if (value !== undefined && Math.abs(value) > 0.001) chartdata.push({ label, value });
+		if (value !== undefined && Math.abs(value) > 0.001) chartdata.push({ label: label, value: value });
 	}
 
 	// Sort the categories

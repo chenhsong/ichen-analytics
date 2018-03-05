@@ -65,9 +65,15 @@ interface ITimeRangeValues
 	data: { [key: string]: number; }
 }
 
-interface IEventsReportData
+interface IControllerIDandName
 {
-	[controllerId: string]: ITimeRangeValues[];
+	controllerId: number;
+	name: string;
+}
+
+interface ITimeRangeValuesByControllers
+{
+	[controllerId: string]: (ITimeRangeValues & IControllerIDandName)[];
 }
 
 interface IRunReportParameters

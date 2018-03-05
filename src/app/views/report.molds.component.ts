@@ -43,7 +43,7 @@ import { DrawPieChart } from "../utils/drawPieChart";
 		</div>
 	`
 })
-export class MoldsReportComponent extends ReportBaseComponent<IEventsReportData | ITimeRangeValues[]>
+export class MoldsReportComponent extends ReportBaseComponent<ITimeRangeValuesByControllers | ITimeRangeValues[]>
 {
 	public showChart = false;
 	public collapseHeader = false;

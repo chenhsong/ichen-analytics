@@ -64,7 +64,7 @@ const JobModeSortOrder: { [jobmode: string]: number; } = {
 		</div>
 	`
 })
-export class JobModesReportComponent extends ReportBaseComponent<IEventsReportData | ITimeRangeValues[]>
+export class JobModesReportComponent extends ReportBaseComponent<ITimeRangeValuesByControllers | ITimeRangeValues[]>
 {
 	public showChart = false;
 	public collapseHeader = false;

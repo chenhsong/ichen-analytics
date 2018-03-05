@@ -43,7 +43,7 @@ import { DrawPieChart } from "../utils/drawPieChart";
 		</div>
 `
 })
-export class OperatorsReportComponent extends ReportBaseComponent<IEventsReportData | ITimeRangeValues[]>
+export class OperatorsReportComponent extends ReportBaseComponent<ITimeRangeValuesByControllers | ITimeRangeValues[]>
 {
 	public showChart = false;
 	public collapseHeader = false;

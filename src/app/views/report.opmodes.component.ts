@@ -52,7 +52,7 @@ const OpModeSortOrder: { [opmode: string]: number; } = {
 		</div>
 `
 })
-export class OpModesReportComponent extends ReportBaseComponent<IEventsReportData | ITimeRangeValues[]>
+export class OpModesReportComponent extends ReportBaseComponent<ITimeRangeValuesByControllers | ITimeRangeValues[]>
 {
 	public showChart = false;
 	public collapseHeader = false;

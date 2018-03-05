@@ -141,7 +141,7 @@ export function DrawStackedChart(
 
 			if (value !== undefined && Math.abs(value) < 0.001) value = undefined;
 
-			series.data.push({ label: dateslist[i].full, value });
+			series.data.push({ label: dateslist[i].full, value: value });
 		}
 
 		chartdata.push(series);

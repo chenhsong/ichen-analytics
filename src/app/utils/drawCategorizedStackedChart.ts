@@ -12,7 +12,7 @@ export function DrawCategorizedStackedChart(
 	title: string,
 	canvas: string,
 	timeRange: string,
-	data: IEventsReportData,
+	data: ITimeRangeValuesByControllers,
 	i18n: ITranslationDictionary,
 	categoriesSort: ((a: string, b: string) => number) | null,
 	formatCategory: ((category: string, i18n: ITranslationDictionary) => string) | null
@@ -20,61 +20,70 @@ export function DrawCategorizedStackedChart(
 {
 	data = data || {};
 
-	const datax: (ITimeRangeValues & { controllerId: number; name: string; })[] = [];
+	const machines: (ITimeRangeValues & IControllerIDandName)[] = [];
 
 	for (const controllerId in data) {
 		if (!data.hasOwnProperty(controllerId)) continue;
 
-		const machine = data[controllerId][0] as (ITimeRangeValues & { controllerId: number; name: string; });
+		const machine = data[controllerId][0];
 		const id = parseInt(controllerId, 10);
 		machine.controllerId = id;
 		machine.name = (Config.controllersList ? Config.controllersList.filter(x => x.id === id)[0].name : null) || id.toString();
-		datax.push(machine);
+		machines.push(machine);
 	}
 
-	datax.sort((a, b) => a.name > b.name ? 1 : (a.name < b.name ? -1 : 0));
+	machines.sort((a, b) => a.name > b.name ? 1 : (a.name < b.name ? -1 : 0));
 
 	// Build machines list
 
-	const machineslist = datax.map(m => ({ label: m.name }));
+	const machineNames = machines.map(m => ({ label: m.name }));
 
-	console.debug("Machines:", machineslist);
+	console.debug("Machines:", machineNames);
 
 	// Collect categories
 
-	const categories: { [category: string]: number[]; } = {};
+	const categories: { [category: string]: (number | undefined)[]; } = {};
 
-	for (let i = 0; i < datax.length; i++) {
-		const dataset = datax[i].data;
-
-		for (const key in dataset) {
-			if (!dataset.hasOwnProperty(key)) continue;
-
-			const value = dataset[key];
-			if (value === undefined || Math.abs(value) < 0.01) continue;
-
-			if (categories[key] === undefined) categories[key] = [];
-			categories[key][i] = value;
+	for (const machine of machines) {
+		for (const category in machine.data) {
+			if (!machine.data.hasOwnProperty(category)) continue;
+			if (!(category in categories)) categories[category] = [];
 		}
 	}
+
+	for (const machine of machines) {
+		const dataset = machine.data;
+
+		for (const category in categories) {
+			if (!categories.hasOwnProperty(category)) continue;
+
+			const value = dataset[category];
+
+			if (value === undefined) {
+				categories[category].push(undefined);
+			} else {
+				categories[category].push(Math.abs(value) < 0.01 ? undefined : value);
+			}
+		}
+	}
+
+	console.debug("Categories:", categories);
 
 	// Build chart series
 
 	const chartdata: IChartingStackedSeries[] = [];
 
 	for (const category in categories) {
-		if (categories.hasOwnProperty(category)) continue;
+		if (!categories.hasOwnProperty(category)) continue;
+
+		// Do not chart categories that are empty
+		if (categories[category].filter(x => x !== undefined).length <= 0) continue;
 
 		const display = formatCategory ? formatCategory(category, i18n) : category;
-		const list = categories[category];
 		const series: IChartingStackedSeries = { seriesId: category, seriesName: display, data: [] };
 
-		for (let i = 0; i < list.length; i++) {
-			let value: number | undefined = list[i];
-
-			if (value !== undefined && Math.abs(value) < 0.001) value = undefined;
-
-			series.data.push({ value });
+		for (const value of categories[category]) {
+			series.data.push({ value: value });
 		}
 
 		chartdata.push(series);
@@ -113,7 +122,7 @@ export function DrawCategorizedStackedChart(
 			dataSource:
 				{
 					chart: options,
-					categories: { category: machineslist },
+					categories: { category: machineNames },
 					dataset: chartdata
 				}
 		});
