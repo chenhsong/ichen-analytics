@@ -1,5 +1,6 @@
 ﻿import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { Http, Headers } from "@angular/http";
+import { map } from "rxjs/operators";
 import { Config, URL, reloadControllersList } from "../config";
 
 @Component({
@@ -70,7 +71,7 @@ export class LoginComponent
 		try {
 			const user = await this.http.post(URL.login, JSON.stringify(login), {
 				headers: new Headers({ "Content-Type": "application/json" })
-			}).map(r => r.json() as ILoggedInUser).toPromise();
+			}).pipe(map(r => r.json() as ILoggedInUser)).toPromise();
 
 			console.log("Successfully logged in.", user);
 			this.isBusy = false;

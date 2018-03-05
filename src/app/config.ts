@@ -1,6 +1,6 @@
 ﻿import { ApplicationRef } from "@angular/core";
 import { Http } from "@angular/http";
-import "rxjs/add/operator/map";
+import { map } from "rxjs/operators";
 
 // Constants
 
@@ -63,7 +63,7 @@ export async function reloadControllersList(http: Http)
 {
 	try {
 		// Get controllers
-		const list = await http.get(URL.controllersList).map(r => r.json() as { [id: number]: IController; }).toPromise();
+		const list = await http.get(URL.controllersList).pipe(map(r => r.json() as { [id: number]: IController; })).toPromise();
 
 		//for (const id in list) {
 		//	const c = list[id];
