@@ -2,9 +2,9 @@
 import { Http } from "@angular/http";
 import { Config, URL } from "../config";
 import { ReportBaseComponent } from "./report.base.component";
-import { DrawStackedChart } from "../utils/drawStackedChart";
-import { DrawCategorizedStackedChart } from "../utils/drawCategorizedStackedChart";
-import { DrawPieChart } from "../utils/drawPieChart";
+import { DrawStackedChart } from "../utils/draw-stacked-chart";
+import { DrawCategorizedStackedChart } from "../utils/draw-categorized-stacked-chart";
+import { DrawPieChart } from "../utils/draw-pie-chart";
 
 const OpModeSortOrder: { [opmode: string]: number; } = {
 	"Manual": 3,
