@@ -1,4 +1,5 @@
 ﻿import { Config } from "../config";
+import CollectCategories from "../utils/collect-categories";
 import * as FusionCharts from "fusioncharts";
 import * as Charts from "fusioncharts/fusioncharts.charts";
 import * as Ocean from "fusioncharts/themes/fusioncharts.theme.ocean";
@@ -102,50 +103,33 @@ export function DrawStackedChart(
 	data = data || [];
 	data.sort((a, b) => a.startTime < b.startTime ? -1 : (a.startTime > b.startTime ? 1 : 0));
 
-	// Collect categories
-
-	const categories: { [category: string]: number[]; } = {};
-
-	data.forEach((x, i) =>
-	{
-		for (const key in x.data) {
-			if (!x.data.hasOwnProperty(key)) continue;
-
-			const value = x.data[key];
-			if (value === undefined || Math.abs(value) < 0.01) continue;
-
-			if (categories[key] === undefined) categories[key] = [];
-			categories[key][i] = value;
-		}
-	});
-
 	// Build chart dates
 
 	const dateslist = data.map((val, i) => formatISODate(data, i, i18n, monthOnly));
 
 	console.debug("Dates:", dateslist);
 
+	// Collect categories
+
+	const categories = CollectCategories(data);
+
 	// Build chart series
 
-	const chartdata: IChartingStackedSeries[] = [];
+	const chartdata = [] as IChartingStackedSeries[];
 
-	for (const category in categories) {
-		if (!categories.hasOwnProperty(category)) continue;
+	categories.forEach((list, category) =>
+	{
+		// Do not chart categories that are empty
+		if (!list.some(x => x !== undefined)) return;
 
-		const display = formatCategory ? formatCategory(category, i18n) : category;
-		const list = categories[category];
-		const series: IChartingStackedSeries = { seriesId: category, seriesName: display, data: [] };
-
-		for (let i = 0; i < list.length; i++) {
-			let value: number | undefined = list[i];
-
-			if (value !== undefined && Math.abs(value) < 0.001) value = undefined;
-
-			series.data.push({ label: dateslist[i].full, value: value });
-		}
+		const series = {
+			seriesId: category,
+			seriesName: formatCategory ? formatCategory(category, i18n) : category,
+			data: list.map((value, i) => ({ label: dateslist[i].full, value: value })),
+		} as IChartingStackedSeries;
 
 		chartdata.push(series);
-	}
+	});
 
 	// Sort the chart data by categories
 
@@ -174,20 +158,19 @@ export function DrawStackedChart(
 
 	// Draw chart
 
-	const chart = new FusionCharts(
-		{
-			type: "scrollstackedcolumn2d",
-			renderAt: canvas,
-			width: "100%",
-			height: "100%",
-			dataFormat: "json",
-			dataSource:
-				{
-					chart: options,
-					categories: { category: dateslist },
-					dataset: chartdata
-				}
-		});
+	const chart = new FusionCharts({
+		type: "scrollstackedcolumn2d",
+		renderAt: canvas,
+		width: "100%",
+		height: "100%",
+		dataFormat: "json",
+		dataSource:
+			{
+				chart: options,
+				categories: { category: dateslist },
+				dataset: chartdata
+			}
+	});
 
 	chart.render();
 }

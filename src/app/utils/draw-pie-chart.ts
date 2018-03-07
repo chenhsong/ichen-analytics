@@ -23,7 +23,7 @@ export function DrawPieChart(
 
 	// Build chart series
 
-	const chartdata: IChartingDataPoint[] = [];
+	const chartdata = [] as IChartingDataPoint[];
 
 	for (const label in data.data) {
 		if (!data.data.hasOwnProperty(label)) continue;
@@ -58,19 +58,18 @@ export function DrawPieChart(
 
 	// Draw chart
 
-	const chart = new FusionCharts(
-		{
-			type: "doughnut2d",
-			renderAt: canvas,
-			width: "100%",
-			height: "100%",
-			dataFormat: "json",
-			dataSource:
-				{
-					chart: options,
-					data: chartdata
-				}
-		});
+	const chart = new FusionCharts({
+		type: "doughnut2d",
+		renderAt: canvas,
+		width: "100%",
+		height: "100%",
+		dataFormat: "json",
+		dataSource:
+			{
+				chart: options,
+				data: chartdata
+			}
+	});
 
 	chart.render();
 }
