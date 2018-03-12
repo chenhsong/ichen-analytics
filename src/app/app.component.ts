@@ -15,8 +15,8 @@ enableProdMode();
 	template: `
 		<header>
 			<div class="container">
-				<a href="#"><img id="logo-ichen" src="images/common/ichen_40_logo_small.png" /></a>
-				<a id="logo-ch" href="http://www.chenhsong.com"><img src="images/common/header_logo_dark.png" /><img class="d-none d-sm-inline" src="images/common/{{i18n.ch_logo}}.png" /></a>
+				<a href="/"><img id="logo-ichen" src="images/common/ichen_40_logo_small.png" /></a>
+				<a id="logo-ch" href="https://www.chenhsong.com"><img src="images/common/header_logo_dark.png" /><img class="d-none d-sm-inline" src="images/common/{{i18n.ch_logo}}.png" /></a>
 				<span class="d-none d-md-inline">{{i18n.app_title_full}}</span>
 				<span class="d-md-none">{{i18n.app_title_short}}</span>
 			</div>
