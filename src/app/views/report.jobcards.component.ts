@@ -110,7 +110,9 @@ export class JobCardsReportComponent extends ReportBaseComponent<ITimeRangeValue
 				DrawStackedChart(this.title, Config.chartCanvasId, controllerId, timerange, this.data, this.i18n, this.compareJobCards, this.formatJobCard, !!parameters.monthOnly);
 			}
 		} else {
-			DrawCategorizedStackedChart(this.title, Config.chartCanvasId, timerange, this.data, this.i18n, this.compareJobCards, this.formatJobCard);
+			const xlabel = (parameters.byMachine ? this.i18n["labelMachine"] as string : null);
+
+			DrawCategorizedStackedChart(this.title, xlabel, Config.chartCanvasId, timerange, this.data, this.i18n, this.compareJobCards, this.formatJobCard);
 		}
 	}
 }

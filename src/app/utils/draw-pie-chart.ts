@@ -9,7 +9,7 @@ Ocean(FusionCharts);
 CH(FusionCharts);
 
 export function DrawPieChart(
-	title: string,
+	title: string | null,
 	canvas: string,
 	controllerId: number,
 	timeRange: string,

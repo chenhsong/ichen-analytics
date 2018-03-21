@@ -10,7 +10,8 @@ Ocean(FusionCharts);
 CH(FusionCharts);
 
 export function DrawCategorizedStackedChart(
-	title: string,
+	title: string | null,
+	xAxis: string | null,
 	canvas: string,
 	timeRange: string,
 	data: ITimeRangeValuesByControllers,
@@ -76,7 +77,7 @@ export function DrawCategorizedStackedChart(
 		numVisiblePlot: 10,
 		caption: title,
 		subCaption: timeRange,
-		xAxisName: i18n["labelDate"],
+		xAxisName: xAxis,
 		yAxisName: i18n["labelPercentage"],
 		exportFormats: i18n["textExportFormats"],
 		plotToolText: "$seriesName<br>	$label<br>$percentValue"

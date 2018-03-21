@@ -113,7 +113,9 @@ export class OpModesReportComponent extends ReportBaseComponent<ITimeRangeValues
 				DrawStackedChart(this.title, Config.chartCanvasId, controllerId, timerange, this.data, this.i18n, this.compareOpModes, this.formatOpMode, !!parameters.monthOnly);
 			}
 		} else {
-			DrawCategorizedStackedChart(this.title, Config.chartCanvasId, timerange, this.data, this.i18n, this.compareOpModes, this.formatOpMode);
+			const xlabel = (parameters.byMachine ? this.i18n["labelMachine"] as string : null);
+
+			DrawCategorizedStackedChart(this.title, xlabel, Config.chartCanvasId, timerange, this.data, this.i18n, this.compareOpModes, this.formatOpMode);
 		}
 	}
 }

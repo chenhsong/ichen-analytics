@@ -123,7 +123,9 @@ export class JobModesReportComponent extends ReportBaseComponent<ITimeRangeValue
 				DrawStackedChart(this.title, Config.chartCanvasId, controllerId, timerange, this.data, this.i18n, this.compareJobModes, this.formatJobMode, !!parameters.monthOnly);
 			}
 		} else {
-			DrawCategorizedStackedChart(this.title, Config.chartCanvasId, timerange, this.data, this.i18n, this.compareJobModes, this.formatJobMode);
+			const xlabel = (parameters.byMachine ? this.i18n["labelMachine"] as string : null);
+
+			DrawCategorizedStackedChart(this.title, xlabel, Config.chartCanvasId, timerange, this.data, this.i18n, this.compareJobModes, this.formatJobMode);
 		}
 	}
 }

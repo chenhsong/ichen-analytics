@@ -89,7 +89,7 @@ function formatISODate(data: ITimeRangeValues[], index: number, i18n: ITranslati
 // Main charting function
 
 export function DrawStackedChart(
-	title: string,
+	title: string | null,
 	canvas: string,
 	controllerId: number,
 	timeRange: string,
