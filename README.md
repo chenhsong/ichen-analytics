@@ -13,5 +13,5 @@ The user can download historical data as well as display analytical charts on th
 
 1. Install Angular: `npm install @angular/cli -g`
 2. Restore packages: `npm install`
-3. Build: `npm build --prod`
+3. Build: `ng build --prod`
 4. Completed app is in the `dist` directory
