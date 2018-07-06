@@ -5,7 +5,7 @@ import { Config, URL } from "../config";
 @Component({
 	selector: "ichen-logout",
 	template: `
-		<button type="button" [disabled]="!currentUser" (click)="doLogout()" class="btn btn-lg btn-danger"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;{{i18n.btnLogout}}</button>
+		<button type="button" [disabled]="!currentUser" (click)="doLogoutAsync()" class="btn btn-lg btn-danger"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;{{i18n.btnLogout}}</button>
 	`
 })
 export class LogoutComponent
@@ -17,14 +17,16 @@ export class LogoutComponent
 
 	constructor(private http: Http)
 	{
-		this.doLogout();
+		this.doLogoutAsync();
 	}
 
-	public doLogout()
+	public async doLogoutAsync()
 	{
 		Config.currentUser = null;
 		Config.forceLogin = true;
-		this.http.get(URL.logout).subscribe(() => console.log("Successfully logged out."));
+
+		await this.http.get(URL.logout);
+		console.log("Successfully logged out.");
 		Config.jumpToPage();
 	}
 }
