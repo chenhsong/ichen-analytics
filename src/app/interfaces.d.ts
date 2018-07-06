@@ -1,9 +1,4 @@
-﻿declare module "*.json" {
-	const value: any;
-	export default value;
-}
-
-type ITranslationDictionary = Readonly<{ [id: string]: string | { [key: string]: string; }; }>;
+﻿type ITranslationDictionary = Readonly<{ [id: string]: string | { [key: string]: string; }; }>;
 
 interface ILoggedInUser
 {
@@ -98,6 +93,7 @@ interface IChartingDataPoint
 	isSliced?: number;
 	tooltext?: string;
 }
+
 interface IChartingStackedSeries
 {
 	seriesId: string;
