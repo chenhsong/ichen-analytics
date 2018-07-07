@@ -1,5 +1,4 @@
 ﻿import { Http } from "@angular/http";
-import { map, tap } from "rxjs/operators";
 import { Config } from "../config";
 
 export abstract class ReportBaseComponent<T>
@@ -47,10 +46,10 @@ export abstract class ReportBaseComponent<T>
 			const handle = setTimeout(() => this.isBusy = true, 500);
 			this.isError = false;
 
-			const r = await this.http.get(url).pipe(
-				tap(_ => clearTimeout(handle)),
-				map(resp => resp.json() as T)
-			).toPromise();
+			const resp = await this.http.get(url).toPromise();
+
+			clearTimeout(handle);
+			const r = resp.json() as T;
 
 			console.log(`Data returned for ${url}`, r);
 			this.data = r;
