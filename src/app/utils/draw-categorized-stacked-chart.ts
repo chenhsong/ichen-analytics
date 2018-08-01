@@ -72,7 +72,7 @@ export function DrawCategorizedStackedChart(
 
 	// Setup charting options
 
-	const options: any = {
+	const options = {
 		theme: "ocean,ch",
 		numVisiblePlot: 10,
 		caption: title,
@@ -92,11 +92,11 @@ export function DrawCategorizedStackedChart(
 		height: "100%",
 		dataFormat: "json",
 		dataSource:
-			{
-				chart: options,
-				categories: { category: machineNames },
-				dataset: chartdata
-			}
+		{
+			chart: options,
+			categories: { category: machineNames },
+			dataset: chartdata
+		}
 	});
 
 	chart.render();

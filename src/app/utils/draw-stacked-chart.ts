@@ -9,6 +9,14 @@ Charts(FusionCharts);
 Ocean(FusionCharts);
 CH(FusionCharts);
 
+// Types
+interface IChartPoint
+{
+	label: string;
+	full: string;
+	showLabel?: 0 | 1;
+}
+
 // Date formatting
 function i18nDateFormat(date: Date, format: string)
 {
@@ -23,7 +31,7 @@ function formatISODate(data: ITimeRangeValues[], index: number, i18n: ITranslati
 	if (monthOnly) {
 		// Always put in the year if January
 
-		const rec: any = {
+		const rec: IChartPoint = {
 			label: i18nDateFormat(date, i18n[date.getMonth() !== 0 ? "formatMonth" : "formatLongMonth"] as string),
 			full: i18nDateFormat(date, i18n["formatLongMonth"] as string)
 		};
@@ -78,7 +86,10 @@ function formatISODate(data: ITimeRangeValues[], index: number, i18n: ITranslati
 		}
 	}
 
-	const r: any = { label: display, full: i18nDateFormat(date, i18n["formatLongDate"] as string) + " " + localtimeISO };
+	const r: IChartPoint = {
+		label: display,
+		full: i18nDateFormat(date, i18n["formatLongDate"] as string) + " " + localtimeISO
+	};
 
 	if (alwaysShow) r.showLabel = 1;
 
@@ -165,11 +176,11 @@ export function DrawStackedChart(
 		height: "100%",
 		dataFormat: "json",
 		dataSource:
-			{
-				chart: options,
-				categories: { category: dateslist },
-				dataset: chartdata
-			}
+		{
+			chart: options,
+			categories: { category: dateslist },
+			dataset: chartdata
+		}
 	});
 
 	chart.render();

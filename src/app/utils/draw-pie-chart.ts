@@ -50,7 +50,7 @@ export function DrawPieChart(
 	const subcaption = !!controllerId ? i18n["labelForMachine"] as string : null;
 	if (subcaption) title += " - " + subcaption.replace("{0}", name).replace("{1}", controllerId.toString());
 
-	const options: any = {
+	const options = {
 		theme: "ocean,ch",
 		caption: title,
 		subCaption: timeRange
@@ -65,10 +65,10 @@ export function DrawPieChart(
 		height: "100%",
 		dataFormat: "json",
 		dataSource:
-			{
-				chart: options,
-				data: chartdata
-			}
+		{
+			chart: options,
+			data: chartdata
+		}
 	});
 
 	chart.render();

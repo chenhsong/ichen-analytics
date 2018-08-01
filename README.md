@@ -1,6 +1,6 @@
 # iChen&reg; System 4.1.2 Analytics UI
 
-Language: TypeScript 2.7 or above  
+Language: TypeScript 3.0 or above  
 Framework: Angular 6.0 or above  
 Major Packages: Bootstrap 4, FusionCharts 3, MyDateRangePicker
 
