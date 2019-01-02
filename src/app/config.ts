@@ -5,7 +5,6 @@ import { Http } from "@angular/http";
 
 const iframeId = "downloadIFrame";
 const urlRoot = (window as any).ServiceUrl || "";
-const chartCanvasId = "chartCanvas";
 const shiftStep = "08:00:00";		// 8-hour shifts
 const timeZone = -(new Date()).getTimezoneOffset();
 
@@ -51,7 +50,6 @@ const Cfg = {
 	forceLogin: false,
 	controllersList: null as IController[] | null,
 	i18n: {},
-	chartCanvasId,
 	timeZone,
 	shiftStep,
 	defaultDateRange,
@@ -92,7 +90,6 @@ export const Config = Cfg as {
 	forceLogin: boolean;
 	controllersList: Readonly<IController>[] | null;
 	i18n: ITranslationDictionary;
-	readonly chartCanvasId: string;
 	readonly timeZone: number;
 	readonly shiftStep: string;
 	readonly defaultDateRange: string;

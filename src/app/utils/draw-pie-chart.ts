@@ -1,16 +1,7 @@
 ﻿import { Config } from "../config";
-import * as FusionCharts from "fusioncharts";
-import * as Charts from "fusioncharts/fusioncharts.charts";
-import * as Ocean from "fusioncharts/themes/fusioncharts.theme.ocean";
-import CH from "./fusioncharts.theme.ch";
-
-Charts(FusionCharts);
-Ocean(FusionCharts);
-CH(FusionCharts);
 
 export function DrawPieChart(
 	title: string | null,
-	canvas: string,
 	controllerId: number,
 	timeRange: string,
 	data: ITimeRangeValues,
@@ -19,7 +10,7 @@ export function DrawPieChart(
 	formatCategory: ((category: string, i18n: ITranslationDictionary) => string) | null
 )
 {
-	if (!data) return;
+	if (!data) throw new Error("DrawPieChart: data is null!");
 
 	// Build chart series
 
@@ -29,7 +20,7 @@ export function DrawPieChart(
 		if (!data.data.hasOwnProperty(label)) continue;
 
 		const value = data.data[label];
-		if (value !== undefined && Math.abs(value) > 0.001) chartdata.push({ label: label, value: value });
+		if (!!value && Math.abs(value) > 0.001) chartdata.push({ label: label, value: value });
 	}
 
 	// Sort the categories
@@ -50,26 +41,14 @@ export function DrawPieChart(
 	const subcaption = !!controllerId ? i18n["labelForMachine"] as string : null;
 	if (subcaption) title += " - " + subcaption.replace("{0}", name).replace("{1}", controllerId.toString());
 
-	const options = {
-		theme: "ocean,ch",
-		caption: title,
-		subCaption: timeRange
+	return {
+		charttype: "doughnut2d",
+		chart: {
+			theme: "ocean,ch",
+			caption: title,
+			subCaption: timeRange,
+			exportFormats: i18n["textExportFormats"]
+		},
+		data: chartdata
 	};
-
-	// Draw chart
-
-	const chart = new FusionCharts({
-		type: "doughnut2d",
-		renderAt: canvas,
-		width: "100%",
-		height: "100%",
-		dataFormat: "json",
-		dataSource:
-		{
-			chart: options,
-			data: chartdata
-		}
-	});
-
-	chart.render();
 }

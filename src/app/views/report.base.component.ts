@@ -6,6 +6,9 @@ export abstract class ReportBaseComponent<T>
 	public isBusy = false;
 	public isError = false;
 
+	public get chartType() { return this.chartData ? this.chartData.type : null; }
+	public chartData: any | null = null;
+
 	public get isInitializing()
 	{
 		if (!this.currentUser) return true;
@@ -68,13 +71,7 @@ export abstract class ReportBaseComponent<T>
 
 	protected clearChart()
 	{
-		const node = document.getElementById("chartCanvas");
-
-		if (!node) return;
-
-		while (node.hasChildNodes()) {
-			if (node.lastChild) node.removeChild(node.lastChild);
-		}
+		this.chartData = null;
 	}
 }
 

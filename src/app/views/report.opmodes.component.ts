@@ -29,7 +29,8 @@ const OpModeSortOrder: { [opmode: string]: number; } = {
 			></ichen-report-header>
 
 			<div id="chartContainer" class="card card-body" [hidden]="!showChart || isError || isDenied">
-				<div id="chartCanvas" [hidden]="isBusy"></div>
+				<fusioncharts *ngIf="!isBusy&&chartData?.charttype=='doughnut2d'" type="doughnut2d" width="100%" height="100%" dataFormat="json" [dataSource]="chartData"></fusioncharts>
+				<fusioncharts *ngIf="!isBusy&&chartData?.charttype=='scrollstackedcolumn2d'" type="scrollstackedcolumn2d" width="100%" height="100%" dataFormat="json" [dataSource]="chartData"></fusioncharts>
 
 				<div id="imgLoading" *ngIf="isBusy" class="text-center">
 					<img src="/images/loading.gif" />
@@ -95,6 +96,7 @@ export class OpModesReportComponent extends ReportBaseComponent<ITimeRangeValues
 		if (parameters.step !== undefined) url += "&step=" + parameters.step;
 
 		this.showChart = true;
+		this.clearChart();
 
 		await this.loadAsync(url);
 
@@ -108,14 +110,13 @@ export class OpModesReportComponent extends ReportBaseComponent<ITimeRangeValues
 			if (this.data.length <= 0) {
 				console.error("Chart has no data!");
 			} else if (this.data.length <= 1) {
-				DrawPieChart(this.title, Config.chartCanvasId, controllerId, timerange, this.data[0], this.i18n, this.compareOpModes, this.formatOpMode);
+				this.chartData = DrawPieChart(this.title, controllerId, timerange, this.data[0], this.i18n, this.compareOpModes, this.formatOpMode);
 			} else {
-				DrawStackedChart(this.title, Config.chartCanvasId, controllerId, timerange, this.data, this.i18n, this.compareOpModes, this.formatOpMode, !!parameters.monthOnly);
+				this.chartData = DrawStackedChart(this.title, controllerId, timerange, this.data, this.i18n, this.compareOpModes, this.formatOpMode, !!parameters.monthOnly);
 			}
 		} else {
 			const xlabel = (parameters.byMachine ? this.i18n["labelMachine"] as string : null);
-
-			DrawCategorizedStackedChart(this.title, xlabel, Config.chartCanvasId, timerange, this.data, this.i18n, this.compareOpModes, this.formatOpMode);
+			this.chartData = DrawCategorizedStackedChart(this.title, xlabel, timerange, this.data, this.i18n, this.compareOpModes, this.formatOpMode);
 		}
 	}
 }

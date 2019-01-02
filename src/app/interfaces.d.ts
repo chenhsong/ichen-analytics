@@ -96,7 +96,7 @@ interface IChartingDataPoint
 
 interface IChartingStackedSeries
 {
-	seriesId: string;
-	seriesName: string;
+	seriesid: string;
+	seriesname: string;
 	data: IChartingDataPoint[];
 }

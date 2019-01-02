@@ -1,18 +1,9 @@
 ﻿import { Config } from "../config";
 import CollectCategories from "../utils/collect-categories";
-import * as FusionCharts from "fusioncharts";
-import * as Charts from "fusioncharts/fusioncharts.charts";
-import * as Ocean from "fusioncharts/themes/fusioncharts.theme.ocean";
-import CH from "./fusioncharts.theme.ch";
-
-Charts(FusionCharts);
-Ocean(FusionCharts);
-CH(FusionCharts);
 
 export function DrawCategorizedStackedChart(
 	title: string | null,
 	xAxis: string | null,
-	canvas: string,
 	timeRange: string,
 	data: ITimeRangeValuesByControllers,
 	i18n: ITranslationDictionary,
@@ -54,8 +45,8 @@ export function DrawCategorizedStackedChart(
 		if (!list.some(x => x !== undefined)) return;
 
 		const series = {
-			seriesId: category,
-			seriesName: formatCategory ? formatCategory(category, i18n) : category,
+			seriesid: category,
+			seriesname: formatCategory ? formatCategory(category, i18n) : category,
 			data: list.map(value => ({ value: value })),
 		} as IChartingStackedSeries;
 
@@ -64,40 +55,27 @@ export function DrawCategorizedStackedChart(
 
 	// Sort the chart data by categories
 
-	if (categoriesSort) chartdata.sort((a, b) => categoriesSort(a.seriesId, b.seriesId));
+	if (categoriesSort) chartdata.sort((a, b) => categoriesSort(a.seriesid, b.seriesid));
 
 	// Completed chart data
 
 	console.debug("Chart data:", chartdata);
 
-	// Setup charting options
-
-	const options = {
-		theme: "ocean,ch",
-		numVisiblePlot: 10,
-		caption: title,
-		subCaption: timeRange,
-		xAxisName: xAxis,
-		yAxisName: i18n["labelPercentage"],
-		exportFormats: i18n["textExportFormats"],
-		plotToolText: "$seriesName<br>	$label<br>$percentValue"
+	return {
+		charttype: "scrollstackedcolumn2d",
+		chart: {
+			theme: "ocean,ch",
+			numVisiblePlot: 10,
+			caption: title,
+			subCaption: timeRange,
+			xAxisName: xAxis,
+			yAxisName: i18n["labelPercentage"],
+			exportFormats: i18n["textExportFormats"],
+			plotToolText: "$label<br>$seriesName<br>$percentValue"
+		},
+		categories: [{
+			category: machineNames
+		}],
+		dataset: chartdata
 	};
-
-	// Draw chart
-
-	const chart = new FusionCharts({
-		type: "scrollstackedcolumn2d",
-		renderAt: canvas,
-		width: "100%",
-		height: "100%",
-		dataFormat: "json",
-		dataSource:
-		{
-			chart: options,
-			categories: { category: machineNames },
-			dataset: chartdata
-		}
-	});
-
-	chart.render();
 }
