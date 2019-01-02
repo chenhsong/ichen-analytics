@@ -25,6 +25,7 @@
                 "output": "/stylesheets"
               },
               "src/stylesheets/main.min.css",
+              "src/stylesheets/common",
               "src/stylesheets/fonts"
             ],
             "styles": [],
