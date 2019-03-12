@@ -9,7 +9,7 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "ngx-build-plus:build",
           "options": {
             "outputPath": "dist",
             "index": "src/index.html",
@@ -52,7 +52,7 @@
           }
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "ngx-build-plus:dev-server",
           "options": {
             "browserTarget": "ichen-analytics:build"
           },
@@ -74,12 +74,24 @@
             "tsConfig": [],
             "exclude": []
           }
+        },
+        "test": {
+          "builder": "ngx-build-plus:karma",
+          "options": {
+            "main": "src/test.ts",
+            "karmaConfig": "./karma.conf.js",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.spec.json",
+            "scripts": [],
+            "styles": [],
+            "assets": []
+          }
         }
       }
     },
     "ichen-analytics-e2e": {
-      "root": "",
-      "sourceRoot": "",
+      "root": "e2e",
+      "sourceRoot": "e2e",
       "projectType": "application"
     }
   },
