@@ -25,6 +25,7 @@
     "@angular/platform-browser-dynamic": "^7.2.8",
     "@angular/router": "^7.2.8",
     "angular-fusioncharts": "^3.0.1",
+    "classlist.js": "^1.1.20150312",
     "core-js": "^2.6.5",
     "fusioncharts": "^3.13.4",
     "mydaterangepicker": "^4.2.1",
