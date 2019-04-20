@@ -1,6 +1,6 @@
 {
   "name": "ichen-analytics",
-  "version": "4.1.3",
+  "version": "4.2",
   "license": "MIT",
   "scripts": {
     "ng": "ng",

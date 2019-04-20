@@ -1,5 +1,5 @@
-iChen&reg; System 4.1 Analytics UI
-=================================
+iChen&reg; System 4 Analytics UI
+================================
 
 Language: TypeScript 3.1 or above  
 Framework: Angular 7.0 or above  
