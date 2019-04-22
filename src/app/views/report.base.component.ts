@@ -1,13 +1,23 @@
-﻿import { Http } from "@angular/http";
+﻿import { Component, Input, Output, OnDestroy } from "@angular/core";
+import { Http } from "@angular/http";
 import { Config } from "../config";
+import * as am4charts from "@amcharts/amcharts4/charts";
 
-export abstract class ReportBaseComponent<T>
+export abstract class ReportBaseComponent<T> implements OnDestroy
 {
 	public isBusy = false;
 	public isError = false;
 
-	public get chartType() { return this.chartData ? this.chartData.type : null; }
-	public chartData: any | null = null;
+	public chart: am4charts.Chart | null = null;
+
+	public get chartType()
+	{
+		if (!this.chart) return "unknown";
+
+		if (this.chart instanceof am4charts.PieChart) return "doughnut2d";
+		if (this.chart instanceof am4charts.XYChart) return "scrollstackedcolumn2d";
+		return "unknown";
+	}
 
 	public get isInitializing()
 	{
@@ -39,14 +49,18 @@ export abstract class ReportBaseComponent<T>
 		}
 	}
 
+	public ngOnDestroy() { this.clearChart(); }
+
 	public get i18n() { return Config.i18n; }
 
 	public get requiredFilter() { return "Status"; }
 
 	public async loadAsync(url: string): Promise<void>
 	{
+		let handle;
+
 		try {
-			const handle = setTimeout(() => this.isBusy = true, 500);
+			handle = setTimeout(() => this.isBusy = true, 500);
 			this.isError = false;
 
 			const resp = await this.http.get(url).toPromise();
@@ -65,13 +79,15 @@ export abstract class ReportBaseComponent<T>
 				default: this.isError = true; break;
 			}
 		} finally {
+			if (handle) clearTimeout(handle);
 			this.isBusy = false;
 		}
 	}
 
 	protected clearChart()
 	{
-		this.chartData = null;
+		if (this.chart) this.chart.dispose();
+		this.chart = null;
 	}
 }
 

@@ -16,6 +16,7 @@ header {
 	-o-text-overflow: clip;
 	text-overflow: clip;
 	overflow: visible;
+
 	img {
 		height: 1.2em;
 		margin: 0.3em 0;
@@ -36,6 +37,7 @@ header {
 
 #imgLoading {
 	margin: 3em;
+
 	img {
 		width: 5em;
 	}
@@ -44,6 +46,7 @@ header {
 #imgError,
 #imgNoAuthority {
 	margin-top: 2em;
+
 	img {
 		width: 8em;
 	}
@@ -52,11 +55,14 @@ header {
 .ichen-nav {
 	margin-top: 1em;
 	padding-left: 0;
+
 	.btn-group-vertical {
 		max-width: 100%;
 		min-width: 70%;
+
 		.btn {
 			text-align: left;
+
 			&.active {
 				font-weight: bold;
 			}
@@ -94,6 +100,7 @@ header {
 	font-size: 170%;
 	color: inherit;
 	opacity: 0.7;
+
 	&:hover {
 		color: inherit;
 		opacity: 1;
@@ -108,9 +115,11 @@ header {
 
 .buttons-strip {
 	text-align: center;
+
 	.first {
 		float: left;
 	}
+
 	.last {
 		float: right;
 	}

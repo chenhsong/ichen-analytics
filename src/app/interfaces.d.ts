@@ -94,6 +94,13 @@ interface IChartingDataPoint
 	tooltext?: string;
 }
 
+interface IChartingStackedDataPoint
+{
+	label: string;
+	full?: string;
+	date?: Date;
+}
+
 interface IChartingStackedSeries
 {
 	seriesid: string;

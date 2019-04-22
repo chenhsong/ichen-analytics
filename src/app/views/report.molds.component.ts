@@ -2,9 +2,9 @@
 import { Http } from "@angular/http";
 import { Config, URL } from "../config";
 import { ReportBaseComponent } from "./report.base.component";
-import { DrawStackedChart } from "../utils/draw-stacked-chart";
-import { DrawCategorizedStackedChart } from "../utils/draw-categorized-stacked-chart";
-import { DrawPieChart } from "../utils/draw-pie-chart";
+import { DrawDonutChart } from "../utils/draw-donut-chart";
+import { DrawStackedBarCategoryChart } from "../utils/draw-stacked-bar-category-chart";
+import { DrawStackedBarTimeChart } from "../utils/draw-stacked-bar-time-chart";
 
 @Component({
 	selector: "ichen-report-molds",
@@ -20,8 +20,7 @@ import { DrawPieChart } from "../utils/draw-pie-chart";
 			></ichen-report-header>
 
 			<div id="chartContainer" class="card card-body" [hidden]="!showChart || isError || isDenied">
-				<fusioncharts *ngIf="!isBusy&&chartData?.charttype=='doughnut2d'" type="doughnut2d" width="100%" height="100%" dataFormat="json" [dataSource]="chartData"></fusioncharts>
-				<fusioncharts *ngIf="!isBusy&&chartData?.charttype=='scrollstackedcolumn2d'" type="scrollstackedcolumn2d" width="100%" height="100%" dataFormat="json" [dataSource]="chartData"></fusioncharts>
+				<div id="chartCanvas"></div>
 
 				<div id="imgLoading" *ngIf="isBusy" class="text-center">
 					<img src="/images/loading.gif" />
@@ -58,12 +57,12 @@ export class MoldsReportComponent extends ReportBaseComponent<ITimeRangeValuesBy
 	private compareMolds(a: string, b: string)
 	{
 		switch (a) {
-			case "": a = "\uFFFF"; break;
-			case "NoValue": a = "\uFFFE"; break;
+			case "": a = "\uFFFE"; break;
+			case "NoValue": a = "\uFFFF"; break;
 		}
 		switch (b) {
-			case "": b = "\uFFFF"; break;
-			case "NoValue": b = "\uFFFE"; break;
+			case "": b = "\uFFFE"; break;
+			case "NoValue": b = "\uFFFF"; break;
 		}
 
 		return (a < b) ? -1 : (a > b) ? 1 : 0;
@@ -101,19 +100,27 @@ export class MoldsReportComponent extends ReportBaseComponent<ITimeRangeValuesBy
 
 		if (!this.data) return;
 
+		// Yield to update UI
+		await new Promise(resolve => setTimeout(resolve, 10));
+
+		// Create chart
+
 		const timerange = parameters.from.substr(0, 10) + " - " + parameters.to.substr(0, 10);
 
 		if (Array.isArray(this.data)) {
 			if (this.data.length <= 0) {
 				console.error("Chart has no data!");
 			} else if (this.data.length <= 1) {
-				this.chartData = DrawPieChart(this.title, controllerId, timerange, this.data[0], this.i18n, this.compareMolds, this.formatMold);
+				//this.chartData = DrawPieChart(this.title, controllerId, timerange, this.data[0], this.i18n, this.compareMolds, this.formatMold);
+				this.chart = DrawDonutChart(this.title, controllerId, timerange, this.data[0], this.i18n, this.compareMolds, this.formatMold);
 			} else {
-				this.chartData = DrawStackedChart(this.title, controllerId, timerange, this.data, this.i18n, this.compareMolds, this.formatMold, !!parameters.monthOnly);
+				// this.chartData = DrawStackedChart(this.title, controllerId, timerange, this.data, this.i18n, this.compareMolds, this.formatMold, !!parameters.monthOnly);
+				this.chart = DrawStackedBarTimeChart(this.title, controllerId, timerange, this.data, this.i18n, this.compareMolds, this.formatMold, !!parameters.monthOnly);
 			}
 		} else {
 			const xlabel = (parameters.byMachine ? this.i18n["labelMachine"] as string : null);
-			this.chartData = DrawCategorizedStackedChart(this.title, xlabel, timerange, this.data, this.i18n, this.compareMolds, this.formatMold);
+			// this.chartData = DrawCategorizedStackedChart(this.title, xlabel, timerange, this.data, this.i18n, this.compareMolds, this.formatMold);
+			this.chart = DrawStackedBarCategoryChart(this.title, xlabel, timerange, this.data, this.i18n, this.compareMolds, this.formatMold);
 		}
 	}
 }

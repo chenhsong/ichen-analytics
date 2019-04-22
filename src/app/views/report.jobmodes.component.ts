@@ -2,15 +2,15 @@
 import { Http } from "@angular/http";
 import { Config, URL } from "../config";
 import { ReportBaseComponent } from "./report.base.component";
-import { DrawStackedChart } from "../utils/draw-stacked-chart";
-import { DrawCategorizedStackedChart } from "../utils/draw-categorized-stacked-chart";
-import { DrawPieChart } from "../utils/draw-pie-chart";
+import { DrawDonutChart } from "../utils/draw-donut-chart";
+import { DrawStackedBarCategoryChart } from "../utils/draw-stacked-bar-category-chart";
+import { DrawStackedBarTimeChart } from "../utils/draw-stacked-bar-time-chart";
 
 // Put Production first, Offline and Idle at back
 const JobModeSortOrder: { [jobmode: string]: number; } = {
-	"Unknown": 1,
-	"ID01": 998,
-	"ID02": 0,
+	"Unknown": 998,
+	"ID01": 2,
+	"ID02": 1,
 	"ID03": 3,
 	"ID04": 4,
 	"ID05": 5,
@@ -24,7 +24,8 @@ const JobModeSortOrder: { [jobmode: string]: number; } = {
 	"ID13": 13,
 	"ID14": 14,
 	"ID15": 15,
-	"Offline": 999
+	"Offline": 99,
+	"NoValue": 999
 };
 
 @Component({
@@ -41,8 +42,7 @@ const JobModeSortOrder: { [jobmode: string]: number; } = {
 			></ichen-report-header>
 
 			<div id="chartContainer" class="card card-body" [hidden]="!showChart || isError || isDenied">
-				<fusioncharts *ngIf="!isBusy&&chartData?.charttype=='doughnut2d'" type="doughnut2d" width="100%" height="100%" dataFormat="json" [dataSource]="chartData"></fusioncharts>
-				<fusioncharts *ngIf="!isBusy&&chartData?.charttype=='scrollstackedcolumn2d'" type="scrollstackedcolumn2d" width="100%" height="100%" dataFormat="json" [dataSource]="chartData"></fusioncharts>
+				<div id="chartCanvas"></div>
 
 				<div id="imgLoading" *ngIf="isBusy" class="text-center">
 					<img src="/images/loading.gif" />
@@ -114,19 +114,27 @@ export class JobModesReportComponent extends ReportBaseComponent<ITimeRangeValue
 
 		if (!this.data) return;
 
+		// Yield to update UI
+		await new Promise(resolve => setTimeout(resolve, 10));
+
+		// Create chart
+
 		const timerange = parameters.from.substr(0, 10) + " - " + parameters.to.substr(0, 10);
 
 		if (Array.isArray(this.data)) {
 			if (this.data.length <= 0) {
 				console.error("Chart has no data!");
 			} else if (this.data.length <= 1) {
-				this.chartData = DrawPieChart(this.title, controllerId, timerange, this.data[0], this.i18n, this.compareJobModes, this.formatJobMode);
+				//this.chartData = DrawPieChart(this.title, controllerId, timerange, this.data[0], this.i18n, this.compareJobModes, this.formatJobMode);
+				this.chart = DrawDonutChart(this.title, controllerId, timerange, this.data[0], this.i18n, this.compareJobModes, this.formatJobMode);
 			} else {
-				this.chartData = DrawStackedChart(this.title, controllerId, timerange, this.data, this.i18n, this.compareJobModes, this.formatJobMode, !!parameters.monthOnly);
+				// this.chartData = DrawStackedChart(this.title, controllerId, timerange, this.data, this.i18n, this.compareJobModes, this.formatJobMode, !!parameters.monthOnly);
+				this.chart = DrawStackedBarTimeChart(this.title, controllerId, timerange, this.data, this.i18n, this.compareJobModes, this.formatJobMode, !!parameters.monthOnly);
 			}
 		} else {
 			const xlabel = (parameters.byMachine ? this.i18n["labelMachine"] as string : null);
-			this.chartData = DrawCategorizedStackedChart(this.title, xlabel, timerange, this.data, this.i18n, this.compareJobModes, this.formatJobMode);
+			// this.chartData = DrawCategorizedStackedChart(this.title, xlabel, timerange, this.data, this.i18n, this.compareJobModes, this.formatJobMode);
+			this.chart = DrawStackedBarCategoryChart(this.title, xlabel, timerange, this.data, this.i18n, this.compareJobModes, this.formatJobMode);
 		}
 	}
 }

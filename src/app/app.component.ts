@@ -1,12 +1,22 @@
-﻿import { Component, Input, Output, enableProdMode, ModuleWithProviders, ApplicationRef } from "@angular/core";
+﻿import { Component, Input, Output, enableProdMode, ApplicationRef } from "@angular/core";
 import { Location } from "@angular/common";
 import { Router } from "@angular/router";
 import { Http } from "@angular/http";
-import { Config, URL, reloadControllersList } from "./config";
+import { Config, URL, Charts, reloadControllersList } from "./config";
 import { switchLanguage } from "./app.languages";
 import { AppRoutes } from "./app.routes";
 
+import * as am4core from "@amcharts/amcharts4/core";
+import AnimatedChartTheme from "@amcharts/amcharts4/themes/animated";
+import MaterialChartTheme from "@amcharts/amcharts4/themes/material";
+
 enableProdMode();
+
+// am4core.options.autoSetClassName = true;
+am4core.options.classNamePrefix = Charts.cssPrefix;
+
+am4core.useTheme(AnimatedChartTheme);
+am4core.useTheme(MaterialChartTheme);
 
 @Component({
 	selector: "ichen-analytics",

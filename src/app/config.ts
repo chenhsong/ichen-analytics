@@ -22,6 +22,19 @@ export const URL = {
 	dataDownload: `${urlRoot}/reports/{0}/{1}`
 };
 
+export const Charts = {
+	canvasId: "chartCanvas",
+	cssPrefix: "ics-",
+	title: { fontSize: 25, fontWeight: "bold", marginTop: 10, marginBottom: 5 } as { [id: string]: any; },
+	subtitle: { fontSize: 20, align: "center", marginBottom: 30 } as { [id: string]: any; },
+	colors: {
+		"NoValue": { fill: "#fafafa", opacity: 0.7, text: "#aaa" },
+		"Unknown": { fill: "#ff0", stroke: "#f00", text: "#700" },
+		"OffLine": { fill: "#eee", stroke: "#ccc", text: "#333" },
+		"Offline": { fill: "#eee", stroke: "#ccc", text: "#333" }
+	} as { [id: string]: { fill?: string, opacity?: number, stroke?: string, text?: string }; }
+};
+
 // Load default time range with current date
 
 const now = new Date();
@@ -32,7 +45,6 @@ bom.setDate(1);
 const bomstr = bom.toISOString().substr(0, 10);
 
 const defaultDateRange = `${bomstr} - ${nowstr}`;
-
 
 // Utility functions
 
@@ -53,7 +65,7 @@ const Cfg = {
 	timeZone,
 	shiftStep,
 	defaultDateRange,
-	currentDateRange: defaultDateRange
+	currentDateRange: defaultDateRange,
 };
 
 export async function reloadControllersList(http: Http)
