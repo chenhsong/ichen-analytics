@@ -30,6 +30,23 @@ export function DrawDonutChart(
 
 	if (categoriesSort) chartdata.sort((a, b) => categoriesSort(a.label as string, b.label as string));
 
+	// Slice format
+
+	let customfill = false;
+
+	chartdata.forEach(category =>
+	{
+		if (!category.label) return;
+		if (category.label in Charts.colors) {
+			const color = Charts.colors[category.label];
+			if (color.fill !== undefined) (category as any).fill = am4core.color(color.fill);
+			if (color.opacity !== undefined) (category as any).opacity = color.opacity;
+			if (color.stroke !== undefined) (category as any).stroke = am4core.color(color.stroke);
+			if (color.text !== undefined) (category as any).text = am4core.color(color.text);
+			customfill = true;
+		}
+	});
+
 	// Process the category names
 
 	if (formatCategory) chartdata.forEach(category => category.label = formatCategory(category.label as string, i18n) || category.label);
@@ -64,9 +81,21 @@ export function DrawDonutChart(
 	pieSeries.hiddenState.properties.endAngle = -90;
 	pieSeries.hiddenState.properties.startAngle = -90;
 
-	pieSeries.slices.template.stroke = am4core.color("#fff");
-	pieSeries.slices.template.strokeWidth = 2;
-	pieSeries.slices.template.strokeOpacity = 1;
+	// Formatting
+	if (!customfill) {
+		pieSeries.slices.template.stroke = am4core.color("#fff");
+		pieSeries.slices.template.strokeWidth = 2;
+		pieSeries.slices.template.strokeOpacity = 1;
+	} else {
+		pieSeries.slices.template.stroke = am4core.color("#aaa");
+		pieSeries.slices.template.strokeWidth = 1;
+		pieSeries.slices.template.strokeOpacity = 1;
+
+		pieSeries.slices.template.propertyFields.fill = "fill";
+		// pieSeries.slices.template.propertyFields.stroke = "stroke";
+		pieSeries.slices.template.propertyFields.fillOpacity = "opacity";
+		//pieSeries.labels.template.propertyFields.fill = "text";
+	}
 
 	if (pieSeries.tooltip) pieSeries.tooltip.animationDuration = 200;
 
