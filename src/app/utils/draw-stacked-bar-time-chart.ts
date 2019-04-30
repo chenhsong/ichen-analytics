@@ -115,13 +115,13 @@ export function DrawStackedBarTimeChart(
 	yaxis.numberFormatter = new am4core.NumberFormatter();
 	yaxis.numberFormatter.numberFormat = "#'%'";
 
-	const longdateformat = i18n["formatLongDate"] + (hasTime ? " HH:mm" : "");
+	const tooltipdateformat = i18n[monthOnly ? "formatLongMonth" : "formatLongDate"] + (!monthOnly && hasTime ? " HH:mm" : "");
 
 	series.forEach(category =>
 	{
 		const ss = chart.series.push(new am4charts.ColumnSeries());
 		ss.columns.template.width = am4core.percent(80);
-		ss.columns.template.tooltipText = `{dateX.formatDate('${longdateformat}')}\n{name}\n{valueY.totalPercent.formatNumber('#.#')}%`;
+		ss.columns.template.tooltipText = `{dateX.formatDate('${tooltipdateformat}')}\n{name}\n{valueY.totalPercent.formatNumber('#.#')}%`;
 		ss.name = formatCategory ? formatCategory(category, i18n) : category;
 		ss.dataFields.dateX = "date";
 		ss.dataFields.valueY = category;
