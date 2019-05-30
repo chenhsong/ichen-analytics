@@ -1,6 +1,6 @@
 {
   "name": "ichen-analytics",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -8,9 +8,7 @@
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "build:modern": "ng build --plugin ngx-build-modern --prod",
-    "build:modern:ichen-analytics": "ng build --plugin ngx-build-modern --project ichen-analytics --prod"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -22,15 +20,12 @@
     "@angular/compiler": "^7.2.8",
     "@angular/core": "^7.2.8",
     "@angular/forms": "^7.2.8",
-    "@angular/http": "^7.2.8",
     "@angular/platform-browser": "^7.2.8",
     "@angular/platform-browser-dynamic": "^7.2.8",
     "@angular/router": "^7.2.8",
     "classlist.js": "^1.1.20150312",
     "core-js": "^2.6.5",
     "mydaterangepicker": "^4.2.1",
-    "ngx-build-modern": "^1.1.9",
-    "ngx-build-plus": "^7.7.6",
     "rxjs": "^6.4.0",
     "zone.js": "^0.8.29"
   },
@@ -53,6 +48,6 @@
     "protractor": "~5.1.2",
     "ts-node": "^4.1.0",
     "tslint": "^5.13.1",
-    "typescript": "^3.2.4"
+    "typescript": "~3.4.5"
   }
 }

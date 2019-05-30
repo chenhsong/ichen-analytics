@@ -84,6 +84,7 @@ export function DrawStackedBarCategoryChart(
 	const xaxis = chart.xAxes.push(new am4charts.CategoryAxis());
 	xaxis.dataFields.category = "label";
 	xaxis.renderer.grid.template.location = 0;
+	xaxis.renderer.minGridDistance = 30;
 	if (xAxis) xaxis.title.text = xAxis;
 
 	// Y-axis
@@ -93,6 +94,7 @@ export function DrawStackedBarCategoryChart(
 	yaxis.strictMinMax = true;
 	yaxis.calculateTotals = true;
 	yaxis.renderer.minWidth = 50;
+	xaxis.renderer.minGridDistance = 80;
 	yaxis.title.text = i18n["labelPercentage"] as string;
 	yaxis.numberFormatter = new am4core.NumberFormatter();
 	yaxis.numberFormatter.numberFormat = "#'%'";

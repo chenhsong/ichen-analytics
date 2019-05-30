@@ -1,12 +1,12 @@
-iChen&reg; System 4 Analytics UI
-================================
+iChen® System 4 Analytics UI
+===========================
 
-Language: TypeScript 3.1 or above  
-Framework: Angular 7.0 or above  
-Major Packages: Bootstrap 4, FusionCharts 3, MyDateRangePicker
+Language: TypeScript 3.4 or above  
+Framework: Angular 8.0 or above  
+Major Packages: Bootstrap 4, AmCharts 4, MyDateRangePicker
 
 This is a web application that provides analytical support for stored historical
-data in the iChen&reg; System.
+data in the iChen® System.
 
 The user can download historical data as well as display analytical charts on the same data.
 

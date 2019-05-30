@@ -89,6 +89,7 @@ export function DrawStackedBarTimeChart(
 	const xaxis = chart.xAxes.push(new am4charts.DateAxis());
 	xaxis.dataFields.date = "date";
 	xaxis.renderer.grid.template.location = 0;
+	xaxis.renderer.minGridDistance = 30;
 	//xaxis.title.text = i18n["labelDate"] as string;
 
 	if (monthOnly) {
@@ -111,6 +112,7 @@ export function DrawStackedBarTimeChart(
 	yaxis.strictMinMax = true;
 	yaxis.calculateTotals = true;
 	yaxis.renderer.minWidth = 50;
+	xaxis.renderer.minGridDistance = 80;
 	yaxis.title.text = i18n["labelPercentage"] as string;
 	yaxis.numberFormatter = new am4core.NumberFormatter();
 	yaxis.numberFormatter.numberFormat = "#'%'";
