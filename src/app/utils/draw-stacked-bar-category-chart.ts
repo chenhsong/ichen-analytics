@@ -38,7 +38,7 @@ export function DrawStackedBarCategoryChart(
 
 	// Build chart series
 
-	const chartdata: IChartingStackedDataPoint[] = [];
+	const chartdata: IStackedChartDataPoint[] = [];
 	const series: string[] = [];
 
 	categories.forEach((list, category) =>
@@ -52,13 +52,13 @@ export function DrawStackedBarCategoryChart(
 			// If no data yet, create the data points
 			list.map((val, i) =>
 			{
-				const x = { label: machines[i].name };
-				(x as any)[category] = val;
-				return x as IChartingStackedDataPoint;
+				const x = { label: machines[i].name } as IStackedChartDataPoint;
+				x[category] = val;
+				return x;
 			}).forEach(x => chartdata.push(x));
 		} else {
 			// Add to the data points
-			list.forEach((val, i) => (chartdata[i] as any)[category] = val);
+			list.forEach((val, i) => chartdata[i][category] = val);
 		}
 	});
 
@@ -139,5 +139,5 @@ export function DrawStackedBarCategoryChart(
 	chart.scrollbarX.parent = chart.bottomAxesContainer;
 	chart.scrollbarX.thumb.minWidth = 50;
 
-	return chart as am4charts.Chart;
+	return chart;
 }

@@ -85,25 +85,31 @@ interface IRunReportParameters
 	format?: string;
 }
 
-interface IChartingDataPoint
+interface IDrawFormat
 {
-	label?: string;
+	fill?: string;
+	opacity?: number;
+	stroke?: string;
+	text?: string;
+}
+
+interface IDataPoint
+{
+	label: string;
+	date?: Date;
+}
+
+interface IPieChartDataPoint extends IDataPoint, IDrawFormat
+{
 	value: number | undefined;
 	displayValue?: string;
 	isSliced?: number;
 	tooltext?: string;
 }
 
-interface IChartingStackedDataPoint
+interface ICategoryValues
 {
-	label: string;
-	full?: string;
-	date?: Date;
+	[category: string]: number | undefined;
 }
 
-interface IChartingStackedSeries
-{
-	seriesid: string;
-	seriesname: string;
-	data: IChartingDataPoint[];
-}
+type IStackedChartDataPoint = IDataPoint & ICategoryValues;

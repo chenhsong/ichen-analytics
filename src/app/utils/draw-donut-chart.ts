@@ -17,7 +17,7 @@ export function DrawDonutChart(
 
 	// Build chart series
 
-	const chartdata = [] as IChartingDataPoint[];
+	const chartdata: IPieChartDataPoint[] = [];
 
 	for (const label in data.data) {
 		if (!data.data.hasOwnProperty(label)) continue;
@@ -28,7 +28,7 @@ export function DrawDonutChart(
 
 	// Sort the categories
 
-	if (categoriesSort) chartdata.sort((a, b) => categoriesSort(a.label as string, b.label as string));
+	if (categoriesSort) chartdata.sort((a, b) => categoriesSort(a.label || "", b.label || ""));
 
 	// Slice format
 
@@ -39,17 +39,20 @@ export function DrawDonutChart(
 		if (!category.label) return;
 		if (category.label in Charts.colors) {
 			const color = Charts.colors[category.label];
-			if (color.fill !== undefined) (category as any).fill = am4core.color(color.fill);
-			if (color.opacity !== undefined) (category as any).opacity = color.opacity;
-			if (color.stroke !== undefined) (category as any).stroke = am4core.color(color.stroke);
-			if (color.text !== undefined) (category as any).text = am4core.color(color.text);
+
+			// This is supposed to require amcore.Color, but it seems that strings work just fine
+			if (color.fill) category.fill = color.fill;
+			if (color.opacity !== undefined) category.opacity = color.opacity;
+			if (color.stroke) category.stroke = color.stroke;
+			if (color.text) category.text = color.text;
+
 			customfill = true;
 		}
 	});
 
 	// Process the category names
 
-	if (formatCategory) chartdata.forEach(category => category.label = formatCategory(category.label as string, i18n) || category.label);
+	if (formatCategory) chartdata.forEach(category => category.label = (category.label && formatCategory(category.label, i18n)) || category.label);
 
 	// Completed chart data
 
@@ -103,5 +106,5 @@ export function DrawDonutChart(
 	pieSeries.labels.template.text = "{category} ({value.percent.formatNumber('#.#')}%)";
 	chart.legend.valueLabels.template.text = "{value.percent.formatNumber('#.#')}%";
 
-	return chart as am4charts.Chart;
+	return chart;
 }

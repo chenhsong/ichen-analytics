@@ -1,5 +1,5 @@
 ﻿import { Component, Input, Output } from "@angular/core";
-import { Http } from "@angular/http";
+import { HttpClient } from "@angular/common/http";
 import { Config, URL } from "../config";
 import { ReportBaseComponent } from "./report.base.component";
 import { DrawDonutChart } from "../utils/draw-donut-chart";
@@ -21,7 +21,7 @@ import { DrawStackedBarTimeChart } from "../utils/draw-stacked-bar-time-chart";
 
 			<div id="chartContainer" class="card card-body" [hidden]="!showChart || isError || isDenied">
 				<div id="chartCanvas"></div>
-	
+
 				<div id="imgLoading" *ngIf="isBusy" class="text-center">
 					<img src="/images/loading.gif" />
 				</div>
@@ -48,7 +48,7 @@ export class OperatorsReportComponent extends ReportBaseComponent<ITimeRangeValu
 	public showChart = false;
 	public collapseHeader = false;
 
-	constructor(http: Http) { super(http); }
+	constructor(http: HttpClient) { super(http); }
 
 	public get i18n() { return Config.i18n; }
 

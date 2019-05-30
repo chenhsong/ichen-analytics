@@ -1,5 +1,5 @@
 ﻿import { ApplicationRef } from "@angular/core";
-import { Http } from "@angular/http";
+import { HttpClient } from "@angular/common/http";
 
 // Constants
 
@@ -22,17 +22,23 @@ export const URL = {
 	dataDownload: `${urlRoot}/reports/{0}/{1}`
 };
 
-export const Charts = {
+export const Charts: {
+	canvasId: string;
+	cssPrefix: string;
+	title: { [id: string]: any; };
+	subtitle: { [id: string]: any; };
+	colors: { [id: string]: IDrawFormat; };
+} = {
 	canvasId: "chartCanvas",
 	cssPrefix: "ics-",
-	title: { fontSize: 25, fontWeight: "bold", marginTop: 10, marginBottom: 5 } as { [id: string]: any; },
-	subtitle: { fontSize: 20, align: "center", marginBottom: 30 } as { [id: string]: any; },
+	title: { fontSize: 25, fontWeight: "bold", marginTop: 10, marginBottom: 5 },
+	subtitle: { fontSize: 20, align: "center", marginBottom: 30 },
 	colors: {
 		"NoValue": { fill: "#fafafa", opacity: 0.7, text: "#aaa" },
 		"Unknown": { fill: "#ff0", stroke: "#f00", text: "#700" },
 		"OffLine": { fill: "#eee", stroke: "#ccc", text: "#333" },
 		"Offline": { fill: "#eee", stroke: "#ccc", text: "#333" }
-	} as { [id: string]: { fill?: string, opacity?: number, stroke?: string, text?: string }; }
+	}
 };
 
 // Load default time range with current date
@@ -50,49 +56,9 @@ const defaultDateRange = `${bomstr} - ${nowstr}`;
 
 function jumpToPage(page?: string) { throw new Error("Not implemented."); }
 
-const currentUser = null as ILoggedInUser | null;
+const currentUser: ILoggedInUser | null = null;
 
-const Cfg = {
-	lang: "",
-	urlRoot,
-	appRef: null,
-	get iFrame() { return document.getElementById(iframeId) as HTMLIFrameElement; },
-	jumpToPage,
-	currentUser,
-	forceLogin: false,
-	controllersList: null as IController[] | null,
-	i18n: {},
-	timeZone,
-	shiftStep,
-	defaultDateRange,
-	currentDateRange: defaultDateRange,
-};
-
-export async function reloadControllersList(http: Http)
-{
-	try {
-		// Get controllers
-		const resp = await http.get(URL.controllersList).toPromise();
-		const list = resp.json() as { [id: number]: IController; };
-
-		//for (const id in list) {
-		//	const c = list[id];
-		//	if (c.created) c.created = new Date(c.created as string);
-		//	if (c.modified) c.modified = new Date(c.modified as string);
-		//}
-
-		Cfg.controllersList = [];
-
-		for (const key in list) Cfg.controllersList.push(list[key]);
-
-		console.log("Controllers: ", Cfg.controllersList);
-	} catch (err) {
-		console.error("Cannot load controllers!");
-		console.error(err);
-	}
-}
-
-export const Config = Cfg as {
+const Cfg: {
 	lang: string;
 	readonly urlRoot: string;
 	appRef: ApplicationRef | null;
@@ -106,4 +72,37 @@ export const Config = Cfg as {
 	readonly shiftStep: string;
 	readonly defaultDateRange: string;
 	currentDateRange: string;
+} = {
+	lang: "",
+	urlRoot,
+	appRef: null,
+	get iFrame() { return document.getElementById(iframeId) as HTMLIFrameElement; },
+	jumpToPage,
+	currentUser,
+	forceLogin: false,
+	controllersList: null,
+	i18n: {},
+	timeZone,
+	shiftStep,
+	defaultDateRange,
+	currentDateRange: defaultDateRange,
 };
+
+export async function reloadControllersList(http: HttpClient)
+{
+	try {
+		// Get controllers
+		const list = await http.get<{ [id: number]: IController; }>(URL.controllersList).toPromise();
+
+		Cfg.controllersList = [];
+
+		for (const key in list) Cfg.controllersList.push(list[key]);
+
+		console.log("Controllers: ", Cfg.controllersList);
+	} catch (err) {
+		console.error("Cannot load controllers!");
+		console.error(err);
+	}
+}
+
+export const Config = Cfg;

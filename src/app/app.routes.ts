@@ -1,5 +1,4 @@
-﻿import { Type } from "@angular/core";
-import { Route, RouterModule } from "@angular/router";
+﻿import { Route, RouterModule } from "@angular/router";
 
 import { URL } from "./config";
 import { HomeComponent } from "./views/home.component";
@@ -13,7 +12,7 @@ import { MoldsReportComponent } from "./views/report.molds.component";
 
 export interface IRoute extends Route
 {
-	name?: string;
+	name: string;
 	icon?: string;
 	background?: string;
 	hidden?: boolean;
@@ -28,7 +27,7 @@ export const AppRoutes: IRoute[] = [
 	{ path: "jobcards", name: "routeJobCards", component: JobCardsReportComponent, icon: "credit-card" },
 	{ path: "molds", name: "routeMolds", component: MoldsReportComponent, icon: "th-large" },
 	{ path: "logout", name: "routeLogout", component: LogoutComponent, icon: "log-out", background: "danger" },
-	{ path: "**", redirectTo: "/home", hidden: true }
+	{ path: "**", name: "routeDefault", redirectTo: "/home", hidden: true }
 ];
 
 export const AppComponentsList = [
@@ -42,7 +41,7 @@ export const AppComponentsList = [
 	MoldsReportComponent
 ];
 
-URL.loginRoute = (AppRoutes.find(r => r.component === LoginComponent) as IRoute).name as string;
-URL.homeRoute = (AppRoutes.find(r => r.component === HomeComponent) as IRoute).name as string;
+URL.loginRoute = (AppRoutes.find(r => r.component === LoginComponent) as IRoute).name;
+URL.homeRoute = (AppRoutes.find(r => r.component === HomeComponent) as IRoute).name;
 
 export const AppRouterModule = RouterModule.forRoot(AppRoutes);

@@ -1,5 +1,5 @@
 ﻿import { Component, Input, Output, EventEmitter } from "@angular/core";
-import { Http, Headers } from "@angular/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Config, URL, reloadControllersList } from "../config";
 
 @Component({
@@ -49,7 +49,7 @@ export class LoginComponent
 
 	public get i18n() { return Config.i18n; }
 
-	constructor(private http: Http) { }
+	constructor(private http: HttpClient) { }
 
 	public get isValidUser() { return !!this.user && !!this.user.trim(); }
 	public get isValidPassword() { return !!this.password && !!this.password.trim(); }
@@ -68,11 +68,9 @@ export class LoginComponent
 		this.isError = false;
 
 		try {
-			const resp = await this.http.post(URL.login, JSON.stringify(login), {
-				headers: new Headers({ "Content-Type": "application/json" })
+			const user = await this.http.post<ILoggedInUser>(URL.login, JSON.stringify(login), {
+				headers: new HttpHeaders({ "Content-Type": "application/json" })
 			}).toPromise();
-
-			const user = resp.json() as ILoggedInUser;
 
 			console.log("Successfully logged in.", user);
 			this.isBusy = false;

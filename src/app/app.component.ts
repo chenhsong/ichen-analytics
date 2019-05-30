@@ -1,7 +1,7 @@
 ﻿import { Component, Input, Output, enableProdMode, ApplicationRef } from "@angular/core";
 import { Location } from "@angular/common";
 import { Router } from "@angular/router";
-import { Http } from "@angular/http";
+import { HttpClient } from "@angular/common/http";
 import { Config, URL, Charts, reloadControllersList } from "./config";
 import { switchLanguage } from "./app.languages";
 import { AppRoutes } from "./app.routes";
@@ -73,7 +73,7 @@ export class AppComponent
 	public get currentLang() { return Config.lang; }
 	public readonly routes = AppRoutes.filter(r => !r.hidden);
 
-	constructor(private location: Location, private router: Router, private http: Http, private app: ApplicationRef)
+	constructor(private location: Location, private router: Router, private http: HttpClient, private app: ApplicationRef)
 	{
 		Config.jumpToPage = this.jumpToPage.bind(this);
 		Config.appRef = app;
@@ -102,12 +102,7 @@ export class AppComponent
 	{
 		try {
 			// Get current logged-in user
-			const resp = await this.http.get(URL.currentUser).toPromise();
-			const user = resp.json() as ILoggedInUser;
-
-			//if (user.started) user.started = new Date(user.started as string);
-			//if (user.created) user.created = new Date(user.created as string);
-			//if (user.lastAccessed) user.lastAccessed = new Date(user.lastAccessed as string);
+			const user = await this.http.get<ILoggedInUser>(URL.currentUser).toPromise();
 
 			Config.currentUser = user;
 

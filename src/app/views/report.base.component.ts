@@ -1,5 +1,5 @@
 ﻿import { Component, Input, Output, OnDestroy } from "@angular/core";
-import { Http } from "@angular/http";
+import { HttpClient } from "@angular/common/http";
 import { Config } from "../config";
 import * as am4charts from "@amcharts/amcharts4/charts";
 
@@ -41,7 +41,7 @@ export abstract class ReportBaseComponent<T> implements OnDestroy
 	private noAuthority = false;
 	private isLoading = false;
 
-	constructor(protected http: Http)
+	constructor(protected http: HttpClient)
 	{
 		if (Config.forceLogin) {
 			console.log("Not logged in. Redirecting to login page...");
@@ -63,13 +63,12 @@ export abstract class ReportBaseComponent<T> implements OnDestroy
 			handle = setTimeout(() => this.isBusy = true, 500);
 			this.isError = false;
 
-			const resp = await this.http.get(url).toPromise();
+			const resp = await this.http.get<T>(url).toPromise();
 
 			clearTimeout(handle);
-			const r = resp.json() as T;
 
-			console.log(`Data returned for ${url}`, r);
-			this.data = r;
+			console.log(`Data returned for ${url}`, resp);
+			this.data = resp;
 		} catch (err) {
 			console.error(err);
 			this.data = null;

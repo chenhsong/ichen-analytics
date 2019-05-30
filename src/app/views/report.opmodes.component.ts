@@ -1,5 +1,5 @@
 ﻿import { Component, Input, Output } from "@angular/core";
-import { Http } from "@angular/http";
+import { HttpClient } from "@angular/common/http";
 import { Config, URL } from "../config";
 import { ReportBaseComponent } from "./report.base.component";
 import { DrawDonutChart } from "../utils/draw-donut-chart";
@@ -59,7 +59,7 @@ export class OpModesReportComponent
 	public showChart = false;
 	public collapseHeader = false;
 
-	constructor(http: Http) { super(http); }
+	constructor(http: HttpClient) { super(http); }
 
 	public get i18n() { return Config.i18n; }
 

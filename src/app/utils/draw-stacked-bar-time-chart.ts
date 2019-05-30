@@ -34,7 +34,7 @@ export function DrawStackedBarTimeChart(
 
 	// Build chart series
 
-	const chartdata: IChartingStackedDataPoint[] = [];
+	const chartdata: IStackedChartDataPoint[] = [];
 	const series: string[] = [];
 
 	categories.forEach((list, category) =>
@@ -51,13 +51,13 @@ export function DrawStackedBarTimeChart(
 				const x = {
 					label: dateslist[i].toDateString(),
 					date: dateslist[i]
-				};
-				(x as any)[category] = val;
-				return x as IChartingStackedDataPoint;
+				} as IStackedChartDataPoint;
+				x[category] = val;
+				return x;
 			}).forEach(x => chartdata.push(x));
 		} else {
 			// Add to the data points
-			list.forEach((val, i) => (chartdata[i] as any)[category] = val);
+			list.forEach((val, i) => chartdata[i][category] = val);
 		}
 	});
 
@@ -159,5 +159,5 @@ export function DrawStackedBarTimeChart(
 	chart.scrollbarX.parent = chart.bottomAxesContainer;
 	chart.scrollbarX.thumb.minWidth = 50;
 
-	return chart as am4charts.Chart;
+	return chart;
 }
