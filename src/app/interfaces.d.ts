@@ -93,6 +93,8 @@ interface IDrawFormat
 	text?: string;
 }
 
+type IDataValue = number | undefined;
+
 interface IDataPoint
 {
 	label: string;
@@ -101,7 +103,7 @@ interface IDataPoint
 
 interface IPieChartDataPoint extends IDataPoint, IDrawFormat
 {
-	value: number | undefined;
+	value: IDataValue;
 	displayValue?: string;
 	isSliced?: number;
 	tooltext?: string;
@@ -109,7 +111,7 @@ interface IPieChartDataPoint extends IDataPoint, IDrawFormat
 
 interface ICategoryValues
 {
-	[category: string]: number | undefined;
+	[category: string]: IDataValue;
 }
 
 type IStackedChartDataPoint = IDataPoint & ICategoryValues;

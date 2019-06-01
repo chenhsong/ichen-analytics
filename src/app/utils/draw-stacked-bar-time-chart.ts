@@ -144,7 +144,7 @@ export function DrawStackedBarTimeChart(
 
 		ss.stroke = am4core.color("#eee");
 
-		if (category in Charts.colors) {
+		if (Charts.colors[category]) {
 			const color = Charts.colors[category];
 			if (color.fill !== undefined) ss.fill = am4core.color(color.fill);
 			if (color.opacity !== undefined) ss.fillOpacity = color.opacity;

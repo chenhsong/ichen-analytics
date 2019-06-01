@@ -95,8 +95,9 @@ export async function reloadControllersList(http: HttpClient)
 		const list = await http.get<{ [id: number]: IController; }>(URL.controllersList).toPromise();
 
 		Cfg.controllersList = [];
+		const clist = Cfg.controllersList;
 
-		for (const key in list) Cfg.controllersList.push(list[key]);
+		Object.values(list).forEach(val => clist.push(val));
 
 		console.log("Controllers: ", Cfg.controllersList);
 	} catch (err) {

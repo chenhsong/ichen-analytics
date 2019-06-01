@@ -4,9 +4,7 @@ import { Config, URL } from "../config";
 
 @Component({
 	selector: "ichen-logout",
-	template: `
-		<button type="button" [disabled]="!currentUser" (click)="doLogoutAsync()" class="btn btn-lg btn-danger"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;{{i18n.btnLogout}}</button>
-	`
+	templateUrl: "./logout.component.html"
 })
 export class LogoutComponent
 {

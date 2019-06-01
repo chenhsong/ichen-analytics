@@ -19,12 +19,11 @@ export function DrawDonutChart(
 
 	const chartdata: IPieChartDataPoint[] = [];
 
-	for (const label in data.data) {
-		if (!data.data.hasOwnProperty(label)) continue;
-
+	Object.keys(data.data).forEach(label =>
+	{
 		const value = data.data[label];
 		if (!!value && Math.abs(value) > 0.001) chartdata.push({ label: label, value: value });
-	}
+	});
 
 	// Sort the categories
 
@@ -37,7 +36,7 @@ export function DrawDonutChart(
 	chartdata.forEach(category =>
 	{
 		if (!category.label) return;
-		if (category.label in Charts.colors) {
+		if (Charts.colors[category.label]) {
 			const color = Charts.colors[category.label];
 
 			// This is supposed to require amcore.Color, but it seems that strings work just fine

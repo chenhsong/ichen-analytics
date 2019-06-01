@@ -1,23 +1,9 @@
 ﻿import { Component } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
 import { Config, URL } from "../config";
 
 @Component({
 	selector: "ichen-home",
-	template: `
-		<ichen-report-download [i18n]="i18n"
-			*ngIf="currentUser && controllersList"
-			[disabled]="isBusy"
-			[currentUser]="currentUser"
-			[controllersList]="controllersList"
-			[title]="i18n.titleDownload"
-			(run)="downloadReport($event)"
-		></ichen-report-download>
-
-		<div id="imgLoading" *ngIf="isBusy">
-			<img src="/images/loading.gif" />
-		</div>
-	`
+	templateUrl: "./home.component.html"
 })
 export class HomeComponent
 {

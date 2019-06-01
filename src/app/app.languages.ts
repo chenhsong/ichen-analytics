@@ -14,7 +14,7 @@ if (localStorage) {
 
 // Utility functions
 
-let i18n: ({ [lang: string]: ITranslationDictionary; } | null) = null;
+let i18n: { [lang: string]: ITranslationDictionary; } | null = null;
 
 export function switchLanguage(lang: string)
 {
@@ -26,7 +26,7 @@ export function switchLanguage(lang: string)
 	}
 
 	// Default for unknown language
-	if (!(lang in i18n)) lang = defaultLang;
+	if (!i18n[lang]) lang = defaultLang;
 
 	// Set new language
 	Config.lang = lang;

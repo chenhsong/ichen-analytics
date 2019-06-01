@@ -4,67 +4,7 @@ import { IMyDrpOptions, IMyDayLabels, IMyMonthLabels } from "mydaterangepicker";
 
 @Component({
 	selector: "ichen-report-header",
-	template: `
-		<div class="card">
-			<h3 class="title card-header">
-				<div class="collapse-button float-right">
-					<span [hidden]="collapsed" class="glyphicon glyphicon-chevron-up" (click)="collapsed=true"></span>
-					<span [hidden]="!collapsed" class="glyphicon glyphicon-chevron-down" (click)="collapsed=false"></span>
-				</div>
-
-				{{title}}
-			</h3>
-
-			<div [hidden]="collapsed" class="card-body">
-				<div style="margin:0 0 1rem 0">
-					<my-date-range-picker
-						*ngIf="useDateRange"
-						class="row"
-						[options]="myDateRangePickerOptions"
-						[selDateRange]="dateRange"
-						(dateRangeChanged)="onDateRangeChanged($event)"
-						(inputFieldChanged)="onDateRangeInputFieldChanged($event)"
-					></my-date-range-picker>
-				</div>
-
-				<div class="row">
-					<div class="form-group col-sm-8 col-md-5">
-						<div class="input-group">
-							<div class="input-group-prepend"><span class="input-group-text">{{i18n.labelCategorize}}</span></div>
-							<select class="form-control" [(ngModel)]="step" [disabled]="disabled" (change)="$event.target.value==byMachineStep ? selectedController='0' : null">
-								<option value="00:00:00">{{i18n.labelEntireRange}}</option>
-								<option *ngIf="controllersList.length > 1" value="{{byMachineStep}}">{{i18n.labelByMachine}}</option>
-								<option value="01:00:00">{{i18n.labelByHour}}</option>
-								<option value="{{byShiftStep}}">{{i18n.labelByShift}}</option>
-								<option value="1:00:00:00">{{i18n.labelByDay}}</option>
-								<option value="-7:00:00:00">{{i18n.labelByWeek}}</option>
-								<option value="-30:00:00:00">{{i18n.labelByMonth}}</option>
-								<option value="-90:00:00:00">{{i18n.labelByQuarter}}</option>
-								<option value="-180:00:00:00">{{i18n.labelByHalfYear}}</option>
-							</select>
-						</div>
-					</div>
-
-					<div class="form-group col-md-6">
-						<div class="input-group">
-							<div class="input-group-prepend"><span class="input-group-text">{{i18n.labelMachine}}</span></div>
-							<select class="form-control" [(ngModel)]="selectedController" [disabled]="disabled" (change)="$event.target.value!='0' && step==byMachineStep ? step='00:00:00' : null">
-								<option *ngIf="controllersList.length > 1" value="0">{{i18n.labelSelectAll}}</option>
-								<option *ngFor="let controller of controllersList" value="{{controller.id}}">{{controller.name}} ({{controller.id}})</option>
-							</select>
-						</div>
-					</div>
-				</div>
-
-				<div>
-					<button type="button"
-						[disabled]="!validate()"
-						(click)="runReport()"
-						class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-flash"></span>&nbsp;&nbsp;&nbsp;{{i18n.btnRunReport}}</button>
-				</div>
-			</div>
-		</div>
-	`
+	templateUrl: "./report.header.component.html"
 })
 export class ReportHeaderComponent implements OnChanges
 {

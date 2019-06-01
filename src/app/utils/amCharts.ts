@@ -8,9 +8,13 @@ export function CreateExportMenu(i18n: ITranslationDictionary)
 
 	const exportformats = i18n["textChartExportFormats"] as { [format: string]: string; };
 
-	for (const key in exportformats) exportmenu.push({ type: key as keyof am4core.IExportOptions, label: exportformats[key] });
+	Object.keys(exportformats).forEach(key => exportmenu.push({
+		type: key as keyof am4core.IExportOptions,
+		label: exportformats[key]
+	}));
 
 	const menu = new am4core.ExportMenu();
+
 	menu.items = [{
 		"label": i18n["labelExport"] as string,
 		"menu": exportmenu
@@ -25,12 +29,8 @@ export function AddChartTitles(chart: am4charts.Chart, title: string, subtitle: 
 
 	if (title) {
 		const charttitle = chart.titles.create();
+		Object.assign(charttitle, Charts.title);
 		charttitle.text = title;
-
-		for (const prop in Charts.title) {
-			if (!Charts.title.hasOwnProperty(prop)) continue;
-			(charttitle as any)[prop] = Charts.title[prop];
-		}
 	}
 
 	// Set sub-title
@@ -43,13 +43,9 @@ export function AddChartTitles(chart: am4charts.Chart, title: string, subtitle: 
 		container.width = am4core.percent(100);
 
 		const chartsubtitle = container.createChild(am4core.Label);
+		Object.assign(chartsubtitle, Charts.subtitle);
 		chartsubtitle.text = subtitle;
 		chartsubtitle.align = "center";
-
-		for (const prop in Charts.subtitle) {
-			if (!Charts.subtitle.hasOwnProperty(prop)) continue;
-			(chartsubtitle as any)[prop] = Charts.subtitle[prop];
-		}
 	}
 }
 

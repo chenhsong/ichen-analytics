@@ -18,15 +18,14 @@ export function DrawStackedBarCategoryChart(
 
 	const machines: (ITimeRangeValues & IControllerIDandName)[] = [];
 
-	for (const controllerId in data) {
-		if (!data.hasOwnProperty(controllerId)) continue;
-
+	Object.keys(data).forEach(controllerId =>
+	{
 		const machine = data[controllerId][0];
 		const id = parseInt(controllerId, 10);
 		machine.controllerId = id;
 		machine.name = (Config.controllersList ? Config.controllersList.filter(x => x.id === id)[0].name : null) || id.toString();
 		machines.push(machine);
-	}
+	});
 
 	machines.sort((a, b) => a.name > b.name ? 1 : (a.name < b.name ? -1 : 0));
 
@@ -124,7 +123,7 @@ export function DrawStackedBarCategoryChart(
 
 		ss.stroke = am4core.color("#eee");
 
-		if (category in Charts.colors) {
+		if (Charts.colors[category]) {
 			const color = Charts.colors[category];
 			if (color.fill !== undefined) ss.fill = am4core.color(color.fill);
 			if (color.opacity !== undefined) ss.fillOpacity = color.opacity;

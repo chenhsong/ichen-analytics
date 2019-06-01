@@ -4,75 +4,7 @@ import { IMyDrpOptions, IMyDayLabels, IMyMonthLabels } from "mydaterangepicker";
 
 @Component({
 	selector: "ichen-report-download",
-	template: `
-		<div *ngIf="!isError" class="card">
-			<h3 class="title card-header">{{title}}</h3>
-
-			<div class="card-body">
-				<div style="margin:0 0 1rem 0">
-					<my-date-range-picker
-						class="row"
-						[options]="myDateRangePickerOptions"
-						[selDateRange]="dateRange"
-						(dateRangeChanged)="onDateRangeChanged($event)"
-						(inputFieldChanged)="onDateRangeInputFieldChanged($event)"
-					></my-date-range-picker>
-				</div>
-
-				<div class="row">
-					<div class="form-group col-sm-8 col-md-5">
-						<div class="input-group">
-							<div class="input-group-prepend"><span class="input-group-text">{{i18n.labelDownload}}</span></div>
-							<select class="form-control" [(ngModel)]="dataset" [disabled]="disabled">
-								<option value="">{{i18n.labelSelectDataSet}}</option>
-								<option *ngIf="currentUser && currentUser.roles.indexOf('Status') >= 0" value="events">{{i18n.labelStatus}}</option>
-								<option *ngIf="currentUser && currentUser.roles.indexOf('Cycle') >= 0" value="cycledata">{{i18n.labelCycle}}</option>
-								<option *ngIf="currentUser && currentUser.roles.indexOf('Alarms') >= 0" value="alarms">{{i18n.labelAlarms}}</option>
-								<option *ngIf="currentUser && currentUser.roles.indexOf('Audit') >= 0" value="audit">{{i18n.labelAudit}}</option>
-							</select>
-						</div>
-					</div>
-
-					<div class="form-group col-md-6">
-						<div class="input-group">
-							<div class="input-group-prepend"><span class="input-group-text">{{i18n.labelMachine}}</span></div>
-							<select class="form-control" [(ngModel)]="selectedController" [disabled]="disabled">
-								<option value="">{{i18n.labelSelectMachine}}</option>
-								<option *ngFor="let controller of controllersList" value="{{controller.id}}">{{controller.name}} ({{controller.id}})</option>
-							</select>
-						</div>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="form-group col-sm-6">
-						<div class="input-group">
-							<div class="input-group-prepend"><span class="input-group-text">{{i18n.labelFormat}}</span></div>
-							<select class="form-control" [(ngModel)]="format" [disabled]="disabled">
-								<option value="xls">{{i18n.labelFormatXls}}</option>
-								<option value="xlsx">{{i18n.labelFormatXlsx}}</option>
-								<option value="csv">{{i18n.labelFormatCsv}}</option>
-								<option value="tsv">{{i18n.labelFormatTsv}}</option>
-								<option value="json">{{i18n.labelFormatJson}}</option>
-							</select>
-						</div>
-					</div>
-				</div>
-
-				<div>
-					<button type="button"
-						[disabled]="!validate()"
-						(click)="runReport()"
-						class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-download"></span>&nbsp;&nbsp;&nbsp;{{i18n.btnDownload}}</button>
-				</div>
-			</div>
-		</div>
-
-		<div id="imgNoAuthority" *ngIf="isError">
-			<p><img src="/images/stopsign.png" /></p>
-			<h2>{{i18n.textNoAuthority}}</h2>
-		</div>
-	`
+	templateUrl: "./report.download.component.html"
 })
 export class ReportDownloadComponent implements OnChanges
 {
