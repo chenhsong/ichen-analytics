@@ -59,9 +59,11 @@ export function DrawDonutChart(
 
 	// Setup titles
 
-	const name = !!controllerId && Config.controllersList && Config.controllersList.filter(x => x.id === controllerId)[0].name || controllerId.toString();
-	const subcaption = !!controllerId ? i18n["labelForMachine"] as string : null;
-	if (subcaption) title += " - " + subcaption.replace("{0}", name).replace("{1}", controllerId.toString());
+	if (controllerId) {
+		const name = (Config.controllersList && Config.controllersList.filter(x => x.id === controllerId)[0].name) || controllerId.toString();
+		const subcaption = i18n["labelForMachine"] as string;
+		if (subcaption) title += " - " + subcaption.replace("{0}", name).replace("{1}", controllerId.toString());
+	}
 
 	// Create donut chart
 

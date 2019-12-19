@@ -17,7 +17,6 @@ export function DrawStackedBarTimeChart(
 	monthOnly: boolean
 )
 {
-	data = data || [];
 	data.sort((a, b) => a.startTime < b.startTime ? -1 : (a.startTime > b.startTime ? 1 : 0));
 
 	// Build chart dates
@@ -71,9 +70,11 @@ export function DrawStackedBarTimeChart(
 
 	// Setup titles
 
-	const name = !!controllerId && Config.controllersList && Config.controllersList.filter(x => x.id === controllerId)[0].name || controllerId.toString();
-	const machineinfo = !!controllerId ? i18n["labelForMachine"] as string : null;
-	if (machineinfo) title += " - " + machineinfo.replace("{0}", name).replace("{1}", controllerId.toString());
+	if (controllerId) {
+		const name = (Config.controllersList && Config.controllersList.filter(x => x.id === controllerId)[0].name) || controllerId.toString();
+		const machineinfo = i18n["labelForMachine"] as string;
+		if (machineinfo) title += " - " + machineinfo.replace("{0}", name).replace("{1}", controllerId.toString());
+	}
 
 	// Create bar chart
 

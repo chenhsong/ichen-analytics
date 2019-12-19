@@ -14,8 +14,6 @@ export function DrawStackedBarCategoryChart(
 	formatCategory: ((category: string, i18n: ITranslationDictionary) => string) | null
 )
 {
-	data = data || {};
-
 	const machines: (ITimeRangeValues & IControllerIDandName)[] = [];
 
 	Object.keys(data).forEach(controllerId =>
@@ -23,7 +21,7 @@ export function DrawStackedBarCategoryChart(
 		const machine = data[controllerId][0];
 		const id = parseInt(controllerId, 10);
 		machine.controllerId = id;
-		machine.name = (Config.controllersList ? Config.controllersList.filter(x => x.id === id)[0].name : null) || id.toString();
+		machine.name = (Config.controllersList && Config.controllersList.filter(x => x.id === id)[0].name) || id.toString();
 		machines.push(machine);
 	});
 
