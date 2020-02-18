@@ -9,11 +9,30 @@
 	</h3>
 
 	<div [hidden]="collapsed" class="card-body">
-		<div style="margin:0 0 1rem 0">
-			<my-date-range-picker *ngIf="useDateRange" class="row" [options]="myDateRangePickerOptions"
-														[selDateRange]="dateRange" (dateRangeChanged)="onDateRangeChanged($event)"
-														(inputFieldChanged)="onDateRangeInputFieldChanged($event)">
-			</my-date-range-picker>
+		<div class="row" *ngIf="useDateRange">
+			<div class="form-group col-sm-8 col-md-5">
+				<!-- input box -->
+				<div class="input-group">
+					<input class="form-control" [attr.placeholder]="myDateRangePlaceholder" [disabled]="disabled"
+								 angular-mydatepicker [(ngModel)]="myDateModel" [options]="myDateRangePickerOptions"
+								 (click)="dp.toggleCalendar()" (dateChanged)="onDateRangeChanged($event)"
+								 (inputFieldChanged)="onDateRangeInputFieldChanged($event)" #dp="angular-mydatepicker" />
+
+					<!-- clear date button -->
+					<div class="input-group-append">
+						<button type="button" class="btn btn-secondary" *ngIf="myDateModel" (click)="dp.clearDate()">
+							<i class="glyphicon glyphicon-remove"></i>
+						</button>
+					</div>
+
+					<!-- toggle calendar button -->
+					<div class="input-group-append">
+						<button type="button" class="btn btn-secondary" (click)="dp.toggleCalendar()">
+							<i class="glyphicon glyphicon-calendar"></i>
+						</button>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<div class="row">

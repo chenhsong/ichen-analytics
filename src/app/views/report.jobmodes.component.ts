@@ -1,6 +1,7 @@
 ﻿import { Component, Input, Output } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Config, URL } from "../config";
+import { ITimeRangeValuesByControllers, ITimeRangeValues, ITranslationDictionary, IRunReportParameters } from "../interfaces";
 import { ReportBaseComponent } from "./report.base.component";
 import { DrawDonutChart } from "../utils/draw-donut-chart";
 import { DrawStackedBarCategoryChart } from "../utils/draw-stacked-bar-category-chart";

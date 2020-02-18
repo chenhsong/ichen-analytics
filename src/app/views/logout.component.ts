@@ -1,6 +1,7 @@
 ﻿import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Config, URL } from "../config";
+import { IController } from "../interfaces";
 
 @Component({
 	selector: "ichen-logout",

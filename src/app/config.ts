@@ -1,6 +1,8 @@
 ﻿import { ApplicationRef } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
+import { IDrawFormat, ILoggedInUser, IController, ITranslationDictionary, IDateRange } from "./interfaces";
+
 // Constants
 
 const iframeId = "downloadIFrame";
@@ -44,13 +46,11 @@ export const Charts: {
 // Load default time range with current date
 
 const now = new Date();
-const nowstr = now.toISOString().substr(0, 10);
 
-const bom = new Date(nowstr);
-bom.setDate(1);
-const bomstr = bom.toISOString().substr(0, 10);
-
-const defaultDateRange = `${bomstr} - ${nowstr}`;
+const defaultDateRange: IDateRange = {
+	fromDate: { year: now.getFullYear(), month: now.getMonth() + 1, day: 1 },
+	toDate: { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() }
+};
 
 // Utility functions
 
@@ -70,8 +70,8 @@ const Cfg: {
 	i18n: ITranslationDictionary;
 	readonly timeZone: number;
 	readonly shiftStep: string;
-	readonly defaultDateRange: string;
-	currentDateRange: string;
+	readonly defaultDateRange: IDateRange;
+	currentDateRange: IDateRange;
 } = {
 	lang: "",
 	urlRoot,

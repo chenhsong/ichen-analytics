@@ -10,6 +10,8 @@ import * as am4core from "@amcharts/amcharts4/core";
 import AnimatedChartTheme from "@amcharts/amcharts4/themes/animated";
 import MaterialChartTheme from "@amcharts/amcharts4/themes/material";
 
+import { ILoggedInUser } from "./interfaces";
+
 enableProdMode();
 
 // am4core.options.autoSetClassName = true;

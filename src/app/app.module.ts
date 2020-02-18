@@ -3,7 +3,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 
-import { MyDateRangePickerModule } from "mydaterangepicker";
+import { AngularMyDatePickerModule } from "angular-mydatepicker";
 
 import { AppRouterModule, AppComponentsList } from "./app.routes";
 import { AppComponent } from "./app.component";
@@ -15,7 +15,7 @@ import { ReportHeaderComponent } from "./views/report.header.component";
 		BrowserModule,
 		FormsModule,
 		HttpClientModule,
-		MyDateRangePickerModule,
+		AngularMyDatePickerModule,
 		AppRouterModule
 	],
 

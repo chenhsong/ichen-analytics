@@ -1,3 +1,5 @@
+import { ITimeRangeValues, IDataValue } from "../interfaces";
+
 export default function(data: ITimeRangeValues[])
 {
 	const categories = new Map<string, IDataValue[]>();

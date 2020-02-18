@@ -129,7 +129,8 @@
 		},
 		"textDownloading": "Data is being downloaded. Please wait for the download to complete.",
 		"textError": "An error has occurred! Please try again.",
-		"textNoAuthority": "You do not have enough authority."
+		"textNoAuthority": "You do not have enough authority.",
+		"textSelectDateRange": "select date range..."
 	},
 	"zh-tw": {
 		"ch_logo": "header_logo_dark_chi_large",
@@ -261,7 +262,8 @@
 		},
 		"textDownloading": "數據正在下載中，請稍候。",
 		"textError": "出現錯誤！請重新嘗試。",
-		"textNoAuthority": "您的權限不夠。"
+		"textNoAuthority": "您的權限不夠。",
+		"textSelectDateRange": "選擇日期段..."
 	},
 	"zh-cn": {
 		"ch_logo": "header_logo_dark_chi_large",
@@ -393,6 +395,7 @@
 		},
 		"textDownloading": "数据正在下载中，请稍候。",
 		"textError": "出现错误！请重新尝试。",
-		"textNoAuthority": "您的权限不夠。"
+		"textNoAuthority": "您的权限不夠。",
+		"textSelectDateRange": "选择日期段..."
 	}
 }

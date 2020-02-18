@@ -1,4 +1,6 @@
 ﻿import { Config, Charts } from "../config";
+import { ITimeRangeValues, ITranslationDictionary, IPieChartDataPoint } from "../interfaces";
+
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import { CreateExportMenu, AddChartTitles, ShowIndicator, HideIndicator } from "../utils/amCharts";
@@ -22,7 +24,7 @@ export function DrawDonutChart(
 	Object.keys(data.data).forEach(label =>
 	{
 		const value = data.data[label];
-		if (!!value && Math.abs(value) > 0.001) chartdata.push({ label: label, value: value });
+		if (value !== 0 && Math.abs(value) > 0.001) chartdata.push({ label: label, value: value });
 	});
 
 	// Sort the categories
@@ -60,7 +62,7 @@ export function DrawDonutChart(
 	// Setup titles
 
 	if (controllerId) {
-		const name = (Config.controllersList && Config.controllersList.filter(x => x.id === controllerId)[0].name) || controllerId.toString();
+		const name = Config.controllersList?.filter(x => x.id === controllerId)[0].name ?? controllerId.toString();
 		const subcaption = i18n["labelForMachine"] as string;
 		if (subcaption) title += " - " + subcaption.replace("{0}", name).replace("{1}", controllerId.toString());
 	}

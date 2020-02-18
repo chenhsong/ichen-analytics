@@ -1,4 +1,5 @@
 ﻿import { Config, URL } from "./config";
+import { ITranslationDictionary } from "./interfaces";
 
 // Constants
 
@@ -9,7 +10,7 @@ const langKey = "lang";
 
 if (localStorage) {
 	const lang = localStorage.getItem(langKey);
-	if (!!lang) defaultLang = lang;
+	if (lang) defaultLang = lang;
 }
 
 // Utility functions

@@ -1,6 +1,6 @@
-﻿type ITranslationDictionary = Readonly<{ [id: string]: string | { [key: string]: string; }; }>;
+﻿export type ITranslationDictionary = Readonly<{ [id: string]: string | { [key: string]: string; }; }>;
 
-interface ILoggedInUser
+export interface ILoggedInUser
 {
 	id: number;
 	isEnabled: boolean;
@@ -15,9 +15,9 @@ interface ILoggedInUser
 	modified?: string | Date;
 }
 
-type ControllerTypes = "Ai01" | "Ai02" | "Ai11" | "Ai12" | "CPC60" | "MPC60" | "CDC2000" | "CDC3000" | "CDC2000WIN" | "SPS3300" | "NewAge" | "CBmold300" | "CBmold800" | "Unknown";
+export type ControllerTypes = "Ai01" | "Ai02" | "Ai11" | "Ai12" | "CPC60" | "MPC60" | "CDC2000" | "CDC3000" | "CDC2000WIN" | "SPS3300" | "NewAge" | "CBmold300" | "CBmold800" | "Unknown";
 
-interface IController
+export interface IController
 {
 	id: number;
 	name: string;
@@ -30,48 +30,38 @@ interface IController
 	modified?: string | Date;
 }
 
-interface IDate
+export interface IDate
 {
 	year: number;
 	month: number;
 	day: number;
 }
 
-interface IDateRangePickerInputChangedEvent
+export interface IDateRange
 {
-	value: string;
-	dateRangeFormat: string;
-	valid: boolean;
+	fromDate: IDate;
+	toDate: IDate;
 }
 
-interface IDateRangePickerChangedEvent
-{
-	beginDate: IDate;
-	endDate: IDate;
-	formatted: string;
-	beginEpoc: number;
-	endEpoc: number;
-}
-
-interface ITimeRangeValues
+export interface ITimeRangeValues
 {
 	startTime: string;
 	endTime: string;
 	data: { [key: string]: number; }
 }
 
-interface IControllerIDandName
+export interface IControllerIDandName
 {
 	controllerId: number;
 	name: string;
 }
 
-interface ITimeRangeValuesByControllers
+export interface ITimeRangeValuesByControllers
 {
 	[controllerId: string]: (ITimeRangeValues & IControllerIDandName)[];
 }
 
-interface IRunReportParameters
+export interface IRunReportParameters
 {
 	from: string;
 	to: string;
@@ -85,7 +75,7 @@ interface IRunReportParameters
 	format?: string;
 }
 
-interface IDrawFormat
+export interface IDrawFormat
 {
 	fill?: string;
 	opacity?: number;
@@ -93,15 +83,15 @@ interface IDrawFormat
 	text?: string;
 }
 
-type IDataValue = number | undefined;
+export type IDataValue = number | undefined;
 
-interface IDataPoint
+export interface IDataPoint
 {
 	label: string;
 	date?: Date;
 }
 
-interface IPieChartDataPoint extends IDataPoint, IDrawFormat
+export interface IPieChartDataPoint extends IDataPoint, IDrawFormat
 {
 	value: IDataValue;
 	displayValue?: string;
@@ -109,9 +99,9 @@ interface IPieChartDataPoint extends IDataPoint, IDrawFormat
 	tooltext?: string;
 }
 
-interface ICategoryValues
+export interface ICategoryValues
 {
 	[category: string]: IDataValue;
 }
 
-type IStackedChartDataPoint = IDataPoint & ICategoryValues;
+export type IStackedChartDataPoint = IDataPoint & ICategoryValues;

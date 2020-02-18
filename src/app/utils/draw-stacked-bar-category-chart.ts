@@ -1,5 +1,7 @@
 ﻿import { Config, Charts } from "../config";
+import { ITimeRangeValuesByControllers, ITranslationDictionary, ITimeRangeValues, IControllerIDandName, IStackedChartDataPoint } from "../interfaces";
 import CollectCategories from "../utils/collect-categories";
+
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import { CreateExportMenu, AddChartTitles, ShowIndicator, HideIndicator } from "../utils/amCharts";
@@ -21,7 +23,7 @@ export function DrawStackedBarCategoryChart(
 		const machine = data[controllerId][0];
 		const id = parseInt(controllerId, 10);
 		machine.controllerId = id;
-		machine.name = (Config.controllersList && Config.controllersList.filter(x => x.id === id)[0].name) || id.toString();
+		machine.name = Config.controllersList?.filter(x => x.id === id)[0].name ?? id.toString();
 		machines.push(machine);
 	});
 

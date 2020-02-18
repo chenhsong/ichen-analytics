@@ -1,5 +1,6 @@
 ﻿import { Component } from "@angular/core";
 import { Config, URL } from "../config";
+import { IRunReportParameters } from "../interfaces";
 
 @Component({
 	selector: "ichen-home",

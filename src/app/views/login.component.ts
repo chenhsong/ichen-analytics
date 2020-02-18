@@ -1,6 +1,7 @@
 ﻿import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Config, URL, reloadControllersList } from "../config";
+import { ILoggedInUser } from "../interfaces";
 
 @Component({
 	selector: "ichen-login",
@@ -17,8 +18,8 @@ export class LoginComponent
 
 	constructor(private http: HttpClient) { }
 
-	public get isValidUser() { return !!this.user && !!this.user.trim(); }
-	public get isValidPassword() { return !!this.password && !!this.password.trim(); }
+	public get isValidUser() { return this.user?.trim() ?? null; }
+	public get isValidPassword() { return this.password?.trim() ?? null; }
 
 	public async doLogin(ev: Event)
 	{

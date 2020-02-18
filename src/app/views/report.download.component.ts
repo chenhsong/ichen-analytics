@@ -1,6 +1,7 @@
 ﻿import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from "@angular/core";
 import { Config } from "../config";
-import { IMyDrpOptions, IMyDayLabels, IMyMonthLabels } from "mydaterangepicker";
+import { ITranslationDictionary, ILoggedInUser, IController, IRunReportParameters } from "../interfaces";
+import { IAngularMyDpOptions, IMyDayLabels, IMyMonthLabels, IMyDateModel, IMyInputFieldChanged, CalAnimation } from "angular-mydatepicker";
 
 @Component({
 	selector: "ichen-report-download",
@@ -17,57 +18,63 @@ export class ReportDownloadComponent implements OnChanges
 
 	public isError = false;
 	public parameters: IRunReportParameters | null = null;
-	public dateRange: string;
 	public get hasValidDateRange() { return !!this.parameters; }
 	public dataset = "";
 	public selectedController = "";
 	public format = "xls";
 
-	private myDrpOptions: IMyDrpOptions | null = null;
+	private myDrpHasInput = false;
+	private myDrpOptions: IAngularMyDpOptions | null = null;
+	public myDateModel: IMyDateModel = {
+		isRange: true,
+		dateRange: {
+			beginDate: { year: 0, month: 0, day: 0 },
+			endDate: { year: 0, month: 0, day: 0 }
+		}
+	};
+	public get myDateRangePlaceholder()
+	{
+		return this.i18n["textSelectDateRange"]
+	}
 
 	public get myDateRangePickerOptions()
 	{
 		return this.myDrpOptions || (this.myDrpOptions = {
-			height: "2rem",
-			width: "350px",
+			dateRange: true,
+
+			//selectorHeight: "2rem",
+			//selectorWidth: "350px",
 
 			firstDayOfWeek: "mo",
 			minYear: 2016,
 
-			selectionTxtFontSize: "1.5rem",
-			componentDisabled: this.disabled,
-
-			showApplyBtn: false,
-
 			dayLabels: this.i18n["labelWeekDays"] as IMyDayLabels,
 			monthLabels: this.i18n["labelMonths"] as IMyMonthLabels,
 
-			//clearBtnTxt: this.i18n["btnClear"],
-			//beginDateBtnTxt: this.i18n["labelStartDate"],
-			//endDateBtnTxt: this.i18n["labelEndDate"],
-			//acceptBtnTxt: this.i18n["btnOK"],
-			selectBeginDateTxt: this.i18n["labelSelectStartDate"] as string,
-			selectEndDateTxt: this.i18n["labelSelectEndDate"] as string
+			calendarAnimation: { in: CalAnimation.ScaleTop, out: CalAnimation.ScaleCenter }
 		});
 	}
 
 	constructor()
 	{
-		this.dateRange = Config.currentDateRange;
+		const fromdate = Config.currentDateRange.fromDate;
+		const todate = Config.currentDateRange.toDate;
 
-		const fromstr = Config.currentDateRange.substr(0, 10);
-		const tostr = Config.currentDateRange.substr(13, 10);
-		const fromdate = new Date(parseInt(fromstr.substr(0, 4), 10), parseInt(fromstr.substr(5, 2), 10) - 1, parseInt(fromstr.substr(8, 2), 10), 0, 0, 0, 0);
-		const todate = new Date(parseInt(tostr.substr(0, 4), 10), parseInt(tostr.substr(5, 2), 10) - 1, parseInt(tostr.substr(8, 2), 10), 0, 0, 0, 0);
-		const todate2 = todate;
+		this.myDateModel.dateRange = {
+			beginDate: { year: fromdate.year, month: fromdate.month, day: fromdate.day },
+			endDate: { year: todate.year, month: todate.month, day: todate.day }
+		};
+
+		const todate2 = new Date(todate.year, todate.month - 1, todate.day, 0, 0, 0);
 		todate2.setDate(todate2.getDate() + 1);
 
 		this.parameters = {
 			controllerId: 0,
 			dataset: this.dataset,
 			format: this.format,
-			from: fromstr, to: tostr,
-			lower: fromdate.toISOString(),
+			from: new Date(Date.UTC(fromdate.year, fromdate.month - 1, fromdate.day, 0, 0, 0, 0)).toISOString().substr(0, 10),
+			to: new Date(Date.UTC(todate.year, todate.month - 1, todate.day, 0, 0, 0, 0)).toISOString().substr(0, 10),
+			lower: new Date(fromdate.year, fromdate.month - 1, fromdate.day, 0, 0, 0, 0).toISOString(),
 			upper: todate2.toISOString()
 		};
 	}
@@ -78,37 +85,48 @@ export class ReportDownloadComponent implements OnChanges
 		if (changes.disabled || changes.i18n) this.myDrpOptions = null;
 	}
 
-	public onDateRangeChanged(ev: IDateRangePickerChangedEvent)
+	public onDateRangeChanged(ev: IMyDateModel)
 	{
 		console.debug("onDateRangeChanged", ev);
 
-		if (!!ev.formatted) {
-			const todate = new Date(ev.endDate.year, ev.endDate.month - 1, ev.endDate.day, 0, 0, 0, 0);
-			todate.setDate(todate.getDate() + 1);
+		const fromdate = ev.dateRange?.beginDate;
+		const todate = ev.dateRange?.endDate;
+
+		if (ev.isRange && ev.dateRange?.formatted && fromdate && todate) {
+			const todate2 = new Date(todate.year, todate.month - 1, todate.day, 0, 0, 0, 0);
+			todate2.setDate(todate2.getDate() + 1);
 
 			this.parameters = {
 				controllerId: this.selectedController ? parseInt(this.selectedController, 10) : 0,
 				dataset: this.dataset,
 				format: this.format,
-				from: new Date(Date.UTC(ev.beginDate.year, ev.beginDate.month - 1, ev.beginDate.day, 0, 0, 0, 0)).toISOString().substr(0, 10),
-				to: new Date(Date.UTC(ev.endDate.year, ev.endDate.month - 1, ev.endDate.day, 0, 0, 0, 0)).toISOString().substr(0, 10),
-				lower: new Date(ev.beginDate.year, ev.beginDate.month - 1, ev.beginDate.day, 0, 0, 0, 0).toISOString(),
-				upper: todate.toISOString()
+				from: new Date(Date.UTC(fromdate.year, fromdate.month - 1, fromdate.day, 0, 0, 0, 0)).toISOString().substr(0, 10),
+				to: new Date(Date.UTC(todate.year, todate.month - 1, todate.day, 0, 0, 0, 0)).toISOString().substr(0, 10),
+				lower: new Date(fromdate.year, fromdate.month - 1, fromdate.day, 0, 0, 0, 0).toISOString(),
+				upper: todate2.toISOString()
 			};
 
-			Config.currentDateRange = `${this.parameters.from} - ${this.parameters.to}`;
+			Config.currentDateRange = {
+				fromDate: { year: fromdate.year, month: fromdate.month, day: fromdate.day },
+				toDate: { year: fromdate.year, month: fromdate.month, day: fromdate.day }
+			};
 		} else {
 			this.parameters = null;
 			Config.currentDateRange = Config.defaultDateRange;
 		}
 	}
 
-	public onDateRangeInputFieldChanged(ev: IDateRangePickerInputChangedEvent)
+	public onDateRangeInputFieldChanged(ev: IMyInputFieldChanged)
 	{
 		console.debug("onDateRangeInputFieldChanged", ev);
 		if (!ev.valid) {
-			this.parameters = null;
-			Config.currentDateRange = Config.defaultDateRange;
+			// Ignore until the initial value shows up
+			if (this.myDrpHasInput) {
+				this.parameters = null;
+				Config.currentDateRange = Config.defaultDateRange;
+			}
+		} else {
+			this.myDrpHasInput = true;
 		}
 	}
 
@@ -116,7 +134,7 @@ export class ReportDownloadComponent implements OnChanges
 	{
 		if (this.disabled) return false;
 		if (!this.hasValidDateRange) return false;
-		if (!this.parameters) return false;
+		if (!this.dataset) return false;
 		if (!this.selectedController) return false;
 		if (!this.format) return false;
 

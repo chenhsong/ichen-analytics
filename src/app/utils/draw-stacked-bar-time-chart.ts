@@ -1,5 +1,7 @@
 ﻿import { Config, Charts } from "../config";
+import { ITimeRangeValues, ITranslationDictionary, IStackedChartDataPoint } from "../interfaces";
 import CollectCategories from "../utils/collect-categories";
+
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import { CreateExportMenu, AddChartTitles, ShowIndicator, HideIndicator } from "../utils/amCharts";
@@ -71,7 +73,7 @@ export function DrawStackedBarTimeChart(
 	// Setup titles
 
 	if (controllerId) {
-		const name = (Config.controllersList && Config.controllersList.filter(x => x.id === controllerId)[0].name) || controllerId.toString();
+		const name = Config.controllersList?.filter(x => x.id === controllerId)[0].name ?? controllerId.toString();
 		const machineinfo = i18n["labelForMachine"] as string;
 		if (machineinfo) title += " - " + machineinfo.replace("{0}", name).replace("{1}", controllerId.toString());
 	}
