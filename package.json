@@ -21,7 +21,7 @@
     "@angular/platform-browser": "^9.0.0",
     "@angular/platform-browser-dynamic": "^9.0.0",
     "@angular/router": "^9.0.0",
-    "acorn": "^6.1.1",
+    "acorn": "^6.4.1",
     "angular-mydatepicker": "^0.4.1",
     "core-js": "^3.6.0",
     "rxjs": "^6.5.3",
